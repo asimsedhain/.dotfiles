@@ -1,3 +1,9 @@
+# zsh case insensitive autocomplete
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+
+# adding python env
+export PATH="$PATH:$HOME/Library/Python/3.8/bin"
+
 # NVM node version manager settings
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -7,22 +13,8 @@ export NVM_DIR="$HOME/.nvm"
 # manage dotfiles
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
-# Find and set branch name var if in git repository.
-function git_branch_name()
-{
-  branch=$(git symbolic-ref HEAD 2> /dev/null | awk 'BEGIN{FS="/"} {print $NF}')
-  if [[ $branch == "" ]];
-  then
-    :
-  else
-    echo '- ('$branch')'
-  fi
-}
 
-# Enable substitution in the prompt.
-setopt prompt_subst
-
-export PS1="%1/$(git_branch_name) >"
+export PS1="%1/ >"
 
 runCpp(){
 	g++ "$1" -o ./tempCpp && ./tempCpp && rm ./tempCpp;
@@ -47,6 +39,9 @@ alias grprune="git remote prune origin"
 alias dockKill='docker stop $(docker ps -aq) && docker rm $(docker ps -aq)'
 alias dockPrune='docker image rm $(docker image ls -q -f "dangling=true")'
 alias dockMasterPrune='docker image rm $(docker image ls -q)'
+
+# SSH
+alias sshPi='ssh pi@10.120.69.1'
 
 
 #seting the editor

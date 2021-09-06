@@ -1,4 +1,5 @@
 
+
 " TextEdit might fail if hidden is not set.
 set hidden
 "
@@ -33,6 +34,7 @@ Plug 'HerringtonDarkholme/yats.vim' " TS Syntax"
 Plug 'scrooloose/nerdcommenter'
 Plug 'ctrlpvim/ctrlp.vim' " fuzzy find files
 Plug 'gruvbox-community/gruvbox'
+Plug 'NLKNguyen/papercolor-theme'
 Plug 'junegunn/goyo.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
@@ -52,7 +54,7 @@ if exists('+termguicolors')
 endif
 
 
-colorscheme gruvbox
+colorscheme PaperColor
 
 
 " coc config
@@ -63,7 +65,6 @@ let g:coc_global_extensions = [
   \ 'coc-prettier', 
   \ 'coc-json', 
   \ 'coc-pyright',
-  \ 'coc-python',
   \ 'coc-go',
   \ 'coc-yaml'
   \ ]
@@ -75,7 +76,7 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 command! -nargs=0 Format :call CocAction('format')
 
 " use `:OR` for organize import of current buffer
-command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+command! -nargs=0 Org   :call     CocAction('runCommand', 'editor.action.organizeImport')
 
 " Add status line support, for integration with other plugin, checkout `:h coc-status`
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
@@ -101,10 +102,17 @@ let g:ctrlp_extensions = ['branches']
 let g:ctrlp_working_path_mode = 'ra'
 
 " ctrl+/ for commenting
-nmap <C-_>   <Plug>NERDCommenterToggle
-vmap <C-_>   <Plug>NERDCommenterToggle<CR>gv
-imap <C-_>  <C-c><Plug>NERDCommenterToggle
+if has("macunix")
+	nmap ÷  <Plug>NERDCommenterToggle
+	vmap ÷  <Plug>NERDCommenterToggle<CR>gv
+	imap ÷ <C-c><Plug>NERDCommenterToggle
+endif
 
+if has("win64")
+	nmap <C-_>   <Plug>NERDCommenterToggle
+	vmap <C-_>   <Plug>NERDCommenterToggle<CR>gv
+	imap <C-_>  <C-c><Plug>NERDCommenterToggle
+endif
 
 
 " Native settings
@@ -147,6 +155,7 @@ nnoremap - <C-W>-
 nnoremap + <C-W>+
 
 "Remapping alt+h/j/k/l to move around in splits
+
 :tnoremap <A-h> <C-\><C-N><C-w>h
 :tnoremap <A-j> <C-\><C-N><C-w>j
 :tnoremap <A-k> <C-\><C-N><C-w>k
@@ -159,6 +168,22 @@ nnoremap + <C-W>+
 :nnoremap <A-j> <C-w>j
 :nnoremap <A-k> <C-w>k
 :nnoremap <A-l> <C-w>l
+
+if has("macunix")
+	:tnoremap ˙ <C-\><C-N><C-w>h
+	:tnoremap ∆ <C-\><C-N><C-w>j
+	:tnoremap ˚ <C-\><C-N><C-w>k
+	:tnoremap ¬ <C-\><C-N><C-w>l
+	:inoremap ˙ <C-\><C-N><C-w>h
+	:inoremap ∆ <C-\><C-N><C-w>j
+	:inoremap ˚ <C-\><C-N><C-w>k
+	:inoremap ¬ <C-\><C-N><C-w>l
+	:nnoremap ˙ <C-w>h
+	:nnoremap ∆ <C-w>j
+	:nnoremap ˚ <C-w>k
+	:nnoremap ¬ <C-w>l
+endif
+
 
 
 " Show register
@@ -176,16 +201,16 @@ nnoremap <SPACE>gs :G<CR>
 nnoremap Y y$
 
 
-
-"Copy and Pasting to clipboard
-"Copies into the clipboard with everyyank
-let s:clip = '/mnt/c/Windows/System32/clip.exe'
-if executable(s:clip)
-	augroup WSLYank
-		autocmd!
-		autocmd TextYankPost * call system(s:clip, @0)
-	augroup END
+if has("win64")
+	let s:clip = '/mnt/c/Windows/System32/clip.exe'
+	if executable(s:clip)
+		augroup WSLYank
+			autocmd!
+			autocmd TextYankPost * call system(s:clip, @0)
+		augroup END
+	endif
 endif
+
 
 "Paste from the clipboard with =p works only in normal mode
 "Breaks nvim, uncomment at your own risk
@@ -197,8 +222,6 @@ endif
 
 
 " Formating commands
-command Gofmt w <bar> silent exec "!go fmt %" <bar> e
-command Black w <bar> silent exec "!black %" <bar> e
 command Cfmt normal gg=G<C-o>
 
 
