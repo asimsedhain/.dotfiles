@@ -26,5 +26,7 @@ alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 * Checkout the actual content from the bare repository to your $HOME:
 ```
 config checkout
+```
+```
 config config --local status.showUntrackedFiles no
 ```
