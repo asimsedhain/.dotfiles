@@ -27,6 +27,28 @@ alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 ```
 config checkout
 ```
+* Don't show untracked file
 ```
 config config --local status.showUntrackedFiles no
+```
+* Install Plug for Neovim
+```
+sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+```
+* Install NVM
+```
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+```
+* Install Node
+```
+nvm install node # "node" is an alias for the latest version
+```
+* Install zsh
+```
+apt install zsh
+```
+* Make zsh your default browser
+```
+chsh -s /bin/zsh
 ```
