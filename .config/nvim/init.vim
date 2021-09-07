@@ -35,6 +35,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'ctrlpvim/ctrlp.vim' " fuzzy find files
 Plug 'gruvbox-community/gruvbox'
 Plug 'NLKNguyen/papercolor-theme'
+Plug 'rakr/vim-one'
 Plug 'junegunn/goyo.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
@@ -54,7 +55,7 @@ if exists('+termguicolors')
 endif
 
 
-colorscheme PaperColor
+colorscheme one
 
 
 " coc config
