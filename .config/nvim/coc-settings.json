@@ -1,10 +1,31 @@
 {
-	"python.formatting.blackPath":"~/Library/Python/3.8/bin/black",
+	"python.formatting.blackPath": "~/Library/Python/3.8/bin/black",
 	"python.formatting.provider": "black",
 	"prettier.tabWidth": 4,
 	"prettier.useTabs": true,
 	"go.enable": true,
 	"go.goplsOptions": {
 		"completeUnimported": true
+	},
+	"languageserver": {
+		"ccls": {
+			"command": "ccls",
+			"filetypes": ["c", "cpp", "objc", "objcpp"],
+			"rootPatterns": [
+				".ccls",
+				"compile_commands.json",
+				".vim/",
+				".git/",
+				".hg/"
+			],
+			"initializationOptions": {
+				"cache": {
+					"directory": "/tmp/ccls"
+				},
+				"client": {
+					"snippetSupport": true
+				}
+			}
+		}
 	}
 }

@@ -35,11 +35,12 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'ctrlpvim/ctrlp.vim' " fuzzy find files
 Plug 'gruvbox-community/gruvbox'
 Plug 'NLKNguyen/papercolor-theme'
-Plug 'rakr/vim-one'
 Plug 'junegunn/goyo.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
 Plug 'imkmf/ctrlp-branches'
+Plug 'cdelledonne/vim-cmake'
+Plug 'antoinemadec/FixCursorHold.nvim'
 
 call plug#end()
 
@@ -55,8 +56,9 @@ if exists('+termguicolors')
 endif
 
 
-colorscheme one
+colorscheme gruvbox
 
+let g:cmake_link_compile_commands = 1
 
 " coc config
 let g:coc_global_extensions = [
@@ -67,7 +69,7 @@ let g:coc_global_extensions = [
   \ 'coc-json', 
   \ 'coc-pyright',
   \ 'coc-go',
-  \ 'coc-yaml'
+  \ 'coc-yaml',
   \ ]
 
 " Highlight symbol under cursor on CursorHold
@@ -94,8 +96,6 @@ nmap <silent> gr <Plug>(coc-references)
 " Remap for rename current word
 nmap <F2> <Plug>(coc-rename)
 
-" prettier command for coc
-command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
 " ctrlp
 let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
@@ -187,10 +187,6 @@ endif
 
 
 
-" Show register
-nnoremap <silent> <SPACE>r :registers<CR>
-" Show buffers
-nnoremap <silent> <SPACE>b :buffers<CR>
 " Show marks
 nnoremap <silent> <SPACE>m :marks<CR>
 
