@@ -41,23 +41,38 @@ Plug 'vim-airline/vim-airline'
 Plug 'imkmf/ctrlp-branches'
 Plug 'cdelledonne/vim-cmake'
 Plug 'antoinemadec/FixCursorHold.nvim'
+Plug 'sainnhe/edge'
 
 call plug#end()
 
 "gurvbox theme setting
 let g:gruvbox_contrast_light = "hard"
 let g:gruvbox_contrast_dark = "hard"
-set bg=dark
-"set bg=light
-
-if exists('+termguicolors')
-	let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-	let &t_8b = "\<Esc>[38;2;%lu;%lu;%lum"
-endif
 
 
 colorscheme gruvbox
+set bg=dark
+"set bg=light
 
+
+
+let s:mybg = "dark"
+function! BgToggleSol()
+    if (s:mybg ==? "light")
+       set background=dark
+	   colorscheme gruvbox
+       let s:mybg = "dark"
+    else
+       set background=light
+       let s:mybg = "light"
+	   colorscheme edge
+    endif
+endfunction
+
+
+command! -nargs=0 Bg :call BgToggleSol()
+
+" vim cmake
 let g:cmake_link_compile_commands = 1
 
 " coc config
@@ -216,9 +231,5 @@ endif
 "let s:clip = 'powershell.exe Get-Clipboard'
 "nnoremap <silent> =p call echo(system(s:clip))
 "nnoremap =p :exe 'norm a'.system('/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe -Command Get-Clipboard')<CR>
-
-
-" Formating commands
-command Cfmt normal gg=G<C-o>
 
 
