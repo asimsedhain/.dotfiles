@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/ashimsedhain/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -107,6 +107,7 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 # adding python env
 export PATH="$PATH:$HOME/Library/Python/3.8/bin"
 export PATH="$PATH:/usr/local/include"
+export PATH="$PATH:$HOME/Library/Python/3.8/bin:/snap/bin"
 
 # NVM node version manager settings
 export NVM_DIR="$HOME/.nvm"
