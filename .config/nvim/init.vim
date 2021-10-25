@@ -223,6 +223,11 @@ if has("win64")
 	endif
 endif
 
+" Undo break points
+inoremap , ,<c-g>u
+inoremap . .<c-g>u
+inoremap ! !<c-g>u
+inoremap ? ?<c-g>u
 
 "Paste from the clipboard with =p works only in normal mode
 "Breaks nvim, uncomment at your own risk

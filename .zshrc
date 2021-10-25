@@ -151,7 +151,7 @@ alias dockPrune='docker image rm $(docker image ls -q -f "dangling=true")'
 alias dockMasterPrune='docker image rm $(docker image ls -q)'
 
 # SSH
-alias sshPi='ssh pi@10.120.69.1'
+alias sshPi='ssh pi@10.120.69.16'
 
 
 #seting the editor
