@@ -210,7 +210,14 @@ nnoremap <silent> <SPACE>gl  :Git! log --decorate --oneline --graph --all<CR>
 nnoremap <SPACE>gs :G<CR>
 
 
+" make Y behave like other D/C
 nnoremap Y y$
+
+" map G to move to end of the file instead of end line of file
+nnoremap G G$
+
+" map gg to move begining of file instead of begining line of file
+nnoremap gg gg^
 
 
 if has("win64")
@@ -223,7 +230,7 @@ if has("win64")
 	endif
 endif
 
-" Undo break points
+"Undo break points
 inoremap , ,<c-g>u
 inoremap . .<c-g>u
 inoremap ! !<c-g>u
@@ -236,5 +243,3 @@ inoremap ? ?<c-g>u
 "let s:clip = 'powershell.exe Get-Clipboard'
 "nnoremap <silent> =p call echo(system(s:clip))
 "nnoremap =p :exe 'norm a'.system('/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe -Command Get-Clipboard')<CR>
-
-

@@ -108,6 +108,7 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 export PATH="$PATH:$HOME/Library/Python/3.8/bin"
 export PATH="$PATH:/usr/local/include"
 export PATH="$PATH:$HOME/Library/Python/3.8/bin:/snap/bin"
+export PATH="$PATH:/opt/homebrew/Cellar/llvm/13.0.0_1/bin"
 
 # NVM node version manager settings
 export NVM_DIR="$HOME/.nvm"
@@ -151,7 +152,7 @@ alias dockPrune='docker image rm $(docker image ls -q -f "dangling=true")'
 alias dockMasterPrune='docker image rm $(docker image ls -q)'
 
 # SSH
-alias sshPi='ssh pi@10.120.69.16'
+alias sshPi='ssh pi@10.120.68.242'
 
 
 #seting the editor
