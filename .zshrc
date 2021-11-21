@@ -141,6 +141,7 @@ alias gl="git log --decorate --all --graph --oneline"
 alias gs="git status"
 alias ga="git add"
 alias gc="git commit -m"
+alias gca="git commit --amend"
 alias gpush="git push"
 alias gpull="git pull"
 alias grprune="git remote prune origin"
@@ -153,6 +154,7 @@ alias dockMasterPrune='docker image rm $(docker image ls -q)'
 
 # SSH
 alias sshPi='ssh pi@10.120.68.242'
+alias sshMav='ssh asedhain@maverick2.tacc.utexas.edu'
 
 
 #seting the editor
