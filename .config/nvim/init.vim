@@ -50,13 +50,12 @@ let g:gruvbox_contrast_light = "hard"
 let g:gruvbox_contrast_dark = "hard"
 
 
-colorscheme gruvbox
-set bg=dark
-"set bg=light
+"colorscheme gruvbox
+"set bg=dark
+"let s:mybg = "dark"
 
 
 
-let s:mybg = "dark"
 function! BgToggleSol()
     if (s:mybg ==? "light")
        set background=dark
@@ -64,13 +63,26 @@ function! BgToggleSol()
        let s:mybg = "dark"
     else
        set background=light
-       let s:mybg = "light"
 	   colorscheme edge
+       let s:mybg = "light"
     endif
+endfunction
+
+function! BgSync()
+	if system("defaults read -g AppleInterfaceStyle") =~ '^Dark'
+		set background=dark   " for the dark version of the theme
+		colorscheme gruvbox
+       let s:mybg = "dark"
+	else
+		set background=light  " for the light version of the theme
+	   colorscheme edge
+       let s:mybg = "light"
+	endif
 endfunction
 
 
 command! -nargs=0 Bg :call BgToggleSol()
+call BgSync()
 
 " vim cmake
 let g:cmake_link_compile_commands = 1
