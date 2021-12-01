@@ -22,20 +22,22 @@ call plug#begin('~/.vim/plugged')
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'HerringtonDarkholme/yats.vim' " TS Syntax"
 Plug 'scrooloose/nerdcommenter'
-Plug 'ctrlpvim/ctrlp.vim' " fuzzy find files
 Plug 'tpope/vim-fugitive'
 
 " Airline
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
-Plug 'imkmf/ctrlp-branches'
 Plug 'antoinemadec/FixCursorHold.nvim'
 Plug 'cdelledonne/vim-cmake'
 " colorscheme
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'gruvbox-community/gruvbox'
 Plug 'sonph/onehalf', {'rtp': 'vim'}
+" Utility plugin that other plugin use
+Plug 'nvim-lua/plenary.nvim'
+" Fuzzy finder
+Plug 'nvim-telescope/telescope.nvim'
 
 call plug#end()
 
@@ -77,13 +79,6 @@ nmap <silent> gr <Plug>(coc-references)
 
 " Remap for rename current word
 nmap <F2> <Plug>(coc-rename)
-
-
-" ctrlp
-let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
-let g:ctrlp_extensions = ['branches']
-let g:ctrlp_working_path_mode = 'ra'
-
 
 
 " Vim Airline
