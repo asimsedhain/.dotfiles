@@ -17,14 +17,28 @@ set updatetime=50
 "" Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
 
-" Always show the signcolumn, otherwise it would shift the text each time
-"  diagnostics appear/become resolved.
-if has("patch-8.1.1564")
-"Recently vim can merge signcolumn and number column into one
-	set signcolumn=number
-else
-	set signcolumn=yes
-endif
+" Native settings
+set nocompatible
+filetype off                 
+
+
+set spelllang=en
+set tabstop=4 
+set softtabstop=4
+set shiftwidth=4 
+set scrolloff=12
+filetype indent on
+set number
+set ignorecase
+set smartcase
+set noswapfile
+set incsearch
+set noexpandtab
+set nowrap
+set signcolumn=yes
+"set autoindent
+
+
 
 
 call plug#begin('~/.vim/plugged')
@@ -146,25 +160,6 @@ if has("win64")
 	imap <C-_>  <C-c><Plug>NERDCommenterToggle
 endif
 
-
-" Native settings
-set nocompatible
-filetype off                 
-
-
-set spelllang=en
-set tabstop=4 
-set softtabstop=4
-set shiftwidth=4 
-set scrolloff=12
-filetype indent on
-set number
-set ignorecase
-set smartcase
-set noswapfile
-set incsearch
-set noexpandtab
-"set autoindent
 
 
 " Tweaks for file tree

@@ -3,6 +3,9 @@
 	"python.formatting.provider": "black",
 	"prettier.tabWidth": 4,
 	"prettier.useTabs": true,
+	"eslint.packageManager":"npm",
+	"workspace.workspaceFolderCheckCwd":false,
+	"typescript.suggest.includeCompletionsForImportStatements": false,
 	"go.enable": true,
 	"go.goplsOptions": {
 		"completeUnimported": true
