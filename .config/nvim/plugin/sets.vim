@@ -34,7 +34,6 @@ set incsearch
 set noexpandtab
 set nowrap
 set signcolumn=yes
-set nohlsearch
 set noerrorbells
 
 
