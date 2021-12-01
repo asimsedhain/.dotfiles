@@ -33,15 +33,21 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'HerringtonDarkholme/yats.vim' " TS Syntax"
 Plug 'scrooloose/nerdcommenter'
 Plug 'ctrlpvim/ctrlp.vim' " fuzzy find files
-Plug 'gruvbox-community/gruvbox'
-Plug 'NLKNguyen/papercolor-theme'
-Plug 'junegunn/goyo.vim'
 Plug 'tpope/vim-fugitive'
+
+" Airline
 Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
 Plug 'imkmf/ctrlp-branches'
-Plug 'cdelledonne/vim-cmake'
 Plug 'antoinemadec/FixCursorHold.nvim'
-Plug 'sainnhe/edge'
+Plug 'cdelledonne/vim-cmake'
+" focus reading
+Plug 'junegunn/goyo.vim'
+" colorscheme
+Plug 'NLKNguyen/papercolor-theme'
+Plug 'gruvbox-community/gruvbox'
+Plug 'sonph/onehalf', {'rtp': 'vim'}
 
 call plug#end()
 
@@ -50,33 +56,31 @@ let g:gruvbox_contrast_light = "hard"
 let g:gruvbox_contrast_dark = "hard"
 
 
-"colorscheme gruvbox
-"set bg=dark
-"let s:mybg = "dark"
+let s:global_background = "dark"
+let s:global_light_colorscheme = "onehalflight"
+let s:global_dark_colorscheme = "onehalfdark"
 
-
+function! SetBgCs(temp_bg, temp_cs)
+	execute "set background=" . a:temp_bg
+	execute "colorscheme " a:temp_cs
+	let s:global_background = a:temp_bg
+	let g:airline_theme=a:temp_cs
+endfunction
 
 function! BgToggleSol()
-    if (s:mybg ==? "light")
-       set background=dark
-	   colorscheme gruvbox
-       let s:mybg = "dark"
-    else
-       set background=light
-	   colorscheme edge
-       let s:mybg = "light"
-    endif
+	if (s:global_background ==? "light")
+		call SetBgCs("dark",s:global_dark_colorscheme)
+	else
+		call SetBgCs("light",s:global_light_colorscheme)
+	endif
 endfunction
+
 
 function! BgSync()
 	if system("defaults read -g AppleInterfaceStyle") =~ '^Dark'
-		set background=dark   " for the dark version of the theme
-		colorscheme gruvbox
-       let s:mybg = "dark"
+		call SetBgCs("dark",s:global_dark_colorscheme)
 	else
-		set background=light  " for the light version of the theme
-	   colorscheme edge
-       let s:mybg = "light"
+		call SetBgCs("light",s:global_light_colorscheme)
 	endif
 endfunction
 
@@ -170,6 +174,12 @@ let g:netrw_liststyle=3     " tree view
 let g:netrw_winsize = 25
 let g:netrw_list_hide=netrw_gitignore#Hide()
 let g:netrw_list_hide.=',\(^\|\s\s\)\zs\.\S\+'
+
+
+" Vim Airline
+let g:airline_section_y=""
+let g:airline_section_warning=""
+let g:airline_section_z="%p%%"
 
 
 "Remaping space to ctrl+w in normal mode
