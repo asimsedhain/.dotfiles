@@ -32,9 +32,7 @@ set smartcase
 set noswapfile
 set incsearch
 set noexpandtab
-set nowrap
-set signcolumn=yes
-set nohlsearch
 set noerrorbells
+set signcolumn=yes
 
 

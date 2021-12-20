@@ -63,7 +63,7 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 command! -nargs=0 Format :call CocAction('format')
 
 " use `:OR` for organize import of current buffer
-command! -nargs=0 Org   :call     CocAction('runCommand', 'editor.action.organizeImport')
+command! -nargs=0 Org :call CocAction('runCommand', 'editor.action.organizeImport')
 
 " Add status line support, for integration with other plugin, checkout `:h coc-status`
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}

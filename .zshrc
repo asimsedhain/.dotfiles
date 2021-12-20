@@ -105,9 +105,10 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 
 
 # adding python env
-export PATH="$PATH:$HOME/Library/Python/3.8/bin"
+export PATH="$PATH:$HOME/Library/Python/3.10/bin"
+#export PATH="/opt/homebrew/opt/python@3.10/bin:$PATH"
 export PATH="$PATH:/usr/local/include"
-export PATH="$PATH:$HOME/Library/Python/3.8/bin:/snap/bin"
+#export PATH="$PATH:$HOME/Library/Python/3.8/bin:/snap/bin"
 export PATH="$PATH:/opt/homebrew/Cellar/llvm/13.0.0_1/bin"
 
 # NVM node version manager settings
@@ -132,7 +133,7 @@ runCpp(){
 	#g++ "$1" -o ./tempCpp && ./tempCpp && rm ./tempCpp;
 #}
 # Bash aliases
-alias ls="ls -lah"
+alias ls="ls -lh"
 alias ta="tmux a"
 alias vim="nvim"
 
@@ -160,3 +161,4 @@ alias sshMav='ssh asedhain@maverick2.tacc.utexas.edu'
 #seting the editor
 export EDITOR="nvim"
 export VISUAL="nvim"
+
