@@ -1,5 +1,5 @@
 {
-	"python.formatting.blackPath": "~/Library/Python/3.8/bin/black",
+	"python.formatting.blackPath": "/opt/homebrew/bin/black",
 	"python.formatting.provider": "black",
 	"prettier.tabWidth": 4,
 	"prettier.useTabs": true,

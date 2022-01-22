@@ -106,9 +106,8 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 
 # adding python env
 export PATH="$PATH:$HOME/Library/Python/3.10/bin"
-#export PATH="/opt/homebrew/opt/python@3.10/bin:$PATH"
+
 export PATH="$PATH:/usr/local/include"
-#export PATH="$PATH:$HOME/Library/Python/3.8/bin:/snap/bin"
 export PATH="$PATH:/opt/homebrew/Cellar/llvm/13.0.0_1/bin"
 
 # NVM node version manager settings
@@ -121,7 +120,6 @@ export NVM_DIR="$HOME/.nvm"
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 
-#export PS1="%1/ >"
 export CPATH=/opt/homebrew/include
 export LIBRARY_PATH=/opt/homebrew/lib
 
@@ -129,9 +127,7 @@ runCpp(){
 	g++ -std=c++17 -lfmt "$1" -o ./tempCpp && ./tempCpp && rm ./tempCpp;
 }
 
-#runCpp(){
-	#g++ "$1" -o ./tempCpp && ./tempCpp && rm ./tempCpp;
-#}
+
 # Bash aliases
 alias ls="ls -lh"
 alias ta="tmux a"
@@ -152,6 +148,9 @@ alias grprune="git remote prune origin"
 alias dockKill='docker stop $(docker ps -aq) && docker rm $(docker ps -aq)'
 alias dockPrune='docker image rm $(docker image ls -q -f "dangling=true")'
 alias dockMasterPrune='docker image rm $(docker image ls -q)'
+
+#kubernetes aliases
+alias kctl='kubectl'
 
 # SSH
 alias sshPi='ssh pi@10.120.68.242'
