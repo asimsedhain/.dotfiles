@@ -105,10 +105,10 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 
 
 # adding python env
-export PATH="$PATH:$HOME/Library/Python/3.10/bin"
 
 export PATH="$PATH:/usr/local/include"
-export PATH="$PATH:/opt/homebrew/Cellar/llvm/13.0.0_1/bin"
+export PATH="$PATH:/Users/ashimsedhain/Library/Python/3.8/bin"
+export PATH="$PATH:/Users/ashimsedhain/Library/Python/3.8/lib/python/site-packages"
 
 # NVM node version manager settings
 export NVM_DIR="$HOME/.nvm"
@@ -150,14 +150,21 @@ alias dockPrune='docker image rm $(docker image ls -q -f "dangling=true")'
 alias dockMasterPrune='docker image rm $(docker image ls -q)'
 
 #kubernetes aliases
-alias kctl='kubectl'
+source <(kubectl completion zsh)
+alias kctl=kubectl
+compdef __start_kubectl kctl
 
 # SSH
 alias sshPi='ssh pi@10.120.68.242'
 alias sshMav='ssh asedhain@maverick2.tacc.utexas.edu'
 
+# Mac network location
+alias netHome='networksetup -switchlocation Home'
+alias netAutu='networksetup -switchlocation Automatic'
+
 
 #seting the editor
 export EDITOR="nvim"
 export VISUAL="nvim"
+
 
