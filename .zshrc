@@ -117,7 +117,8 @@ export NVM_DIR="$HOME/.nvm"
 
 
 # manage dotfiles
-alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias dt='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias dtl='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME log --decorate --all --graph --oneline'
 
 
 export CPATH=/opt/homebrew/include
