@@ -43,6 +43,7 @@ call plug#end()
 
 " vim cmake
 let g:cmake_link_compile_commands = 1
+let g:cmake_default_config = 'build'
 
 " coc config
 let g:coc_global_extensions = [

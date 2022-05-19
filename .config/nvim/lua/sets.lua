@@ -27,4 +27,3 @@ global_options.expandtab = false
 global_options.errorbells = false
 global_options.signcolumn = "yes"
 
-
