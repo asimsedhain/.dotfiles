@@ -146,6 +146,7 @@ alias grprune="git remote prune origin"
 
 
 # Docker aliases
+alias dockStop='docker stop $(docker ps -aq)'
 alias dockKill='docker stop $(docker ps -aq) && docker rm $(docker ps -aq)'
 alias dockPrune='docker image rm $(docker image ls -q -f "dangling=true")'
 alias dockVolumeClean='docker volume rm $(docker volume ls -q)'
