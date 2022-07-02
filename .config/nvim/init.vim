@@ -39,6 +39,9 @@ Plug 'nvim-lua/plenary.nvim'
 " Fuzzy finder
 Plug 'nvim-telescope/telescope.nvim'
 
+" Svelte
+Plug 'evanleck/vim-svelte'
+
 call plug#end()
 
 " vim cmake
@@ -55,6 +58,7 @@ let g:coc_global_extensions = [
   \ 'coc-pyright',
   \ 'coc-go',
   \ 'coc-yaml',
+  \ 'coc-svelte',
   \ ]
 
 " Highlight symbol under cursor on CursorHold
