@@ -59,6 +59,7 @@ let g:coc_global_extensions = [
   \ 'coc-go',
   \ 'coc-yaml',
   \ 'coc-svelte',
+  \ 'coc-rust-analyzer',
   \ ]
 
 " Highlight symbol under cursor on CursorHold

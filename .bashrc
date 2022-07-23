@@ -179,3 +179,4 @@ export VISUAL="nvim"
 
 source "$HOME/.cargo/env"
 alias config='/usr/bin/git --git-dir=/home/asedhain/.dotfiles/ --work-tree=/home/asedhain'
+. "$HOME/.cargo/env"

@@ -3,13 +3,15 @@
 	"python.formatting.provider": "black",
 	"prettier.tabWidth": 4,
 	"prettier.useTabs": true,
-	"eslint.packageManager":"npm",
-	"workspace.workspaceFolderCheckCwd":false,
+	"eslint.packageManager": "npm",
+	"workspace.workspaceFolderCheckCwd": false,
 	"typescript.suggest.includeCompletionsForImportStatements": false,
 	"go.enable": true,
 	"go.goplsOptions": {
 		"completeUnimported": true
 	},
+	"rust-analyzer.enable": true,
+	"rust-analyzer.cargo.autoreload": true,
 	"languageserver": {
 		"ccls": {
 			"command": "ccls",
@@ -30,6 +32,6 @@
 				}
 			}
 		}
-  },
-  "svelte.enable-ts-plugin": true
+	},
+	"svelte.enable-ts-plugin": true
 }
