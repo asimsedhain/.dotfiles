@@ -42,6 +42,8 @@ Plug 'nvim-telescope/telescope.nvim'
 " Svelte
 Plug 'evanleck/vim-svelte'
 
+Plug 'wellle/context.vim'
+
 call plug#end()
 
 " vim cmake
