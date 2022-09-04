@@ -15,11 +15,6 @@ endif
 "Remaping space to ctrl+w in normal mode
 nmap <SPACE> <C-w>
 
-" Remap navigation commands to center view on cursor using zz
-nnoremap <C-U> 12kzz
-nnoremap <C-D> 12jzz
-
-
 "Remapping < > and - + for resizing splits 
 nnoremap <lt> <C-W><lt>
 nnoremap > <C-W>>
