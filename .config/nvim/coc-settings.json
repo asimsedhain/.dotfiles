@@ -12,6 +12,7 @@
 	},
 	"rust-analyzer.enable": true,
 	"rust-analyzer.cargo.autoreload": true,
+	"Lua.diagnostics.globals": ["vim"],
 	"languageserver": {
 		"ccls": {
 			"command": "ccls",
