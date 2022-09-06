@@ -144,15 +144,6 @@ runCpp(){
 alias ls="ls -lah"
 alias ta="tmux a"
 alias vim="nvim"
-alias program="cd /mnt/e/Programs"
-alias leetcode="cd ~/work/go/leetcode"
-
-# SSH aliases
-alias stampede="ssh asedhain@stampede2.tacc.utexas.edu"
-alias maverick="ssh asedhain@maverick2.tacc.utexas.edu"
-alias getOutputMultigpuSample='scp asedhain@maverick2.tacc.utexas.edu:\$WORK/COSC4381/output/singularity_multigpu/sample/* ./'
-alias getOutputMultigpu='scp asedhain@maverick2.tacc.utexas.edu:\$WORK/COSC4381/output/singularity_multigpu/output/*.* ./'
-alias getOutputAttention='scp asedhain@maverick2.tacc.utexas.edu:\$WORK/COSC4381/output/singularity_attention/output/*.* ./'
 
 # Git aliases
 alias gl="git log --decorate --all --graph --oneline"

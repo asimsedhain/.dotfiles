@@ -157,15 +157,6 @@ source <(kubectl completion zsh)
 alias kctl=kubectl
 compdef __start_kubectl kctl
 
-# SSH
-alias sshPi='ssh pi@10.120.68.242'
-alias sshMav='ssh asedhain@maverick2.tacc.utexas.edu'
-
-# Mac network location
-alias netHome='networksetup -switchtolocation Home'
-alias netAuto='networksetup -switchtolocation Automatic'
-
-
 #seting the editor
 export EDITOR="nvim"
 export VISUAL="nvim"
