@@ -14,9 +14,9 @@ global_options.updatetime=50
 
 global_options.spelllang = "en"
 
-global_options.tabstop=4 
+global_options.tabstop=4
 global_options.softtabstop=4
-global_options.shiftwidth=4 
+global_options.shiftwidth=4
 global_options.scrolloff=12
 global_options.number = true
 global_options.ignorecase = true

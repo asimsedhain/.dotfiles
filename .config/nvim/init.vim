@@ -65,34 +65,8 @@ let g:coc_global_extensions = [
   \ 'coc-lua'
   \ ]
 
-" Highlight symbol under cursor on CursorHold
-autocmd CursorHold * silent call CocActionAsync('highlight')
-
-" Use `:Format` to format current buffer
-command! -nargs=0 Format :call CocAction('format')
-
-" use `:OR` for organize import of current buffer
-command! -nargs=0 Org :call CocAction('runCommand', 'editor.action.organizeImport')
-
 " Add status line support, for integration with other plugin, checkout `:h coc-status`
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
-
-
-" Remap keys for gotos
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
-
-" Remap for rename current word
-nmap <F2> <Plug>(coc-rename)
-
-
-" Vim Airline
-let g:airline_section_y=""
-let g:airline_section_warning=""
-let g:airline_section_z="%p%%"
 
 lua require("init")

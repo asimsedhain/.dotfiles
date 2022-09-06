@@ -74,7 +74,4 @@ map('i', '!', '!<c-g>u')
 map('i', '?', '?<c-g>u')
 
 
---" Fugitive remap
---nnoremap <silent> <SPACE>gl  :Git! log --decorate --oneline --graph --all<CR>
---nnoremap <SPACE>gs :G<CR>
 
