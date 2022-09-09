@@ -34,5 +34,3 @@ endfunction
 
 command! -nargs=0 Bg :call BgToggleSol()
 call BgSync()
-
-
