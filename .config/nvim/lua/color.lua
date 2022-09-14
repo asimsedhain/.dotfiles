@@ -7,8 +7,8 @@ g.gruvbox_contrast_light = 'hard'
 g.gruvbox_contrast_dark = 'hard'
 
 local dark_mode = false
-local dark_mode_theme = 'onehalfdark'
-local light_mode_theme = 'onehalflight'
+local dark_mode_theme = 'tokyonight-night'
+local light_mode_theme = 'tokyonight-day'
 
 
 function ToggleTheme()
