@@ -1,23 +1,15 @@
 -- global variables
 local g = vim.g
 local map = require("utils").map
-local api = vim.api
---local create_command = vim.api.nvim_create_user_command
---local call = vim
-
 
 -- variables to modify Vim Airline
-g['airline_section_y']=""
-g['airline_section_warning']=""
-g['airline_section_z']="%p%%"
-
+g['airline_section_y'] = ""
+g['airline_section_warning'] = ""
+g['airline_section_z'] = "%p%%"
 
 -- Fugitive remap
-map('n', '<SPACE>gl',  ':Git! log --decorate --oneline --graph --all<CR>')
+map('n', '<SPACE>gl', ':Git! log --decorate --oneline --graph --all<CR>')
 map('n', '<SPACE>gs', ':G<CR>')
-
-
-
 
 -- Telescope
 
@@ -29,4 +21,3 @@ map('n', '<C-g>', '<cmd>lua require(\'telescope.builtin\').live_grep()<cr>')
 map('n', '<SPACE>t', '<cmd>lua require(\'telescope.builtin\').builtin()<cr>')
 -- Space and h for seaching through help
 map('n', '<SPACE>h', '<cmd>lua require(\'telescope.builtin\').help_tags()<cr>')
-

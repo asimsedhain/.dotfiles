@@ -3,19 +3,19 @@ local has = vim.fn.has
 
 -- ctrl+/ for commenting
 if has('macunix') then
-	map('n', '÷', '<Plug>NERDCommenterToggle', {noremap = false})
-	map('v', '÷', '<Plug>NERDCommenterToggle<CR>gv', {noremap = false})
-	map('i', '÷', '<C-c><Plug>NERDCommenterToggle', {noremap = false})
+	map('n', '÷', '<Plug>NERDCommenterToggle', { noremap = false })
+	map('v', '÷', '<Plug>NERDCommenterToggle<CR>gv', { noremap = false })
+	map('i', '÷', '<C-c><Plug>NERDCommenterToggle', { noremap = false })
 
 elseif has('win64') then
-	map('n', '<C-_>', '<Plug>NERDCommenterToggle', {noremap = false})
-	map('v', '<C-_>', '<Plug>NERDCommenterToggle<CR>gv', {noremap = false})
-	map('i', '<C-_>', '<C-c><Plug>NERDCommenterToggle', {noremap = false})
+	map('n', '<C-_>', '<Plug>NERDCommenterToggle', { noremap = false })
+	map('v', '<C-_>', '<Plug>NERDCommenterToggle<CR>gv', { noremap = false })
+	map('i', '<C-_>', '<C-c><Plug>NERDCommenterToggle', { noremap = false })
 end
 
 
 -- Remaping space to ctrl+w in normal mode
-map('n', '<SPACE>', '<C-w>', {noremap = false})
+map('n', '<SPACE>', '<C-w>', { noremap = false })
 
 
 -- remapping < > and - + for resizing splits

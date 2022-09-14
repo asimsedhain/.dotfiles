@@ -7,17 +7,17 @@ global_options.backup = false
 global_options.writebackup = false
 
 -- command line height
-global_options.cmdheight=3
+global_options.cmdheight = 3
 
 --  Having longer updatetime (default is 4000 ms = 4 s leads to noticeable) delays and poor user experience.
-global_options.updatetime=50
+global_options.updatetime = 50
 
 global_options.spelllang = "en"
 
-global_options.tabstop=4
-global_options.softtabstop=4
-global_options.shiftwidth=4
-global_options.scrolloff=12
+global_options.tabstop = 4
+global_options.softtabstop = 4
+global_options.shiftwidth = 4
+global_options.scrolloff = 12
 global_options.number = true
 global_options.ignorecase = true
 global_options.smartcase = true
@@ -30,4 +30,4 @@ global_options.signcolumn = "yes"
 -- sets statusline to be global
 -- and sets border to be thin
 global_options.laststatus = 3
-vim.api.nvim_set_hl(0, 'WinSeparator', {bg = 'None', default = true})
+vim.api.nvim_set_hl(0, 'WinSeparator', { bg = 'None', default = true })
