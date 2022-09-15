@@ -2,6 +2,13 @@
 local g = vim.g
 local map = require("utils").map
 
+
+-- variables to modify netrw
+g.netrw_banner = 0
+g.netrw_liststyle = 3
+g.netrw_winsize = 25
+
+
 -- variables to modify Vim Airline
 g["airline_section_y"] = ""
 g["airline_section_warning"] = ""
