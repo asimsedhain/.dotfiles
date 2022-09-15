@@ -6,6 +6,38 @@ local lsp_servers =
 
 require("mason-lspconfig").setup({ ensure_installed = lsp_servers })
 
+-- nvim-cmp completion engine
+vim.opt.completeopt = { "menu", "menuone", "noselect" }
+
+local cmp = require("cmp")
+
+cmp.setup({
+	window = {
+		completion = cmp.config.window.bordered(),
+	},
+	mapping = {
+		["<C-n>"] = cmp.mapping(function()
+			if cmp.visible() then
+				cmp.select_next_item()
+			else
+				cmp.complete()
+			end
+		end, { "i" }),
+		["<C-p>"] = cmp.mapping(function()
+			if cmp.visible() then
+				cmp.select_prev_item()
+			else
+				cmp.complete()
+			end
+		end, { "i" }),
+	},
+	sources = cmp.config.sources({
+		{ name = "nvim_lsp", keyword_length = 4 },
+	}, {
+		{ name = "buffer", keyword_length = 2 },
+	}, { { name = "path", keyword_length = 3 } }),
+})
+
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
@@ -43,8 +75,11 @@ local on_attach = function(client, bufnr)
 	end
 end
 
+local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
+
 -- lua lsp setup
 config.sumneko_lua.setup({
+	capabilities = capabilities,
 	on_attach = on_attach,
 	settings = {
 		Lua = {
