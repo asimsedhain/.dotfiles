@@ -23,7 +23,6 @@ function ToggleTheme()
 		dark_mode = true
 		vim.cmd('colorscheme ' .. dark_mode_theme)
 		g.airline_theme = dark_mode_airline_theme
-	
 	end
 	vim.api.nvim_set_hl(0, 'WinSeparator', { bg = 'None', default = true })
 end

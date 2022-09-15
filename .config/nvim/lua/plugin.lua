@@ -32,6 +32,9 @@ require("nvim-autopairs").setup({
 	disable_filetype = { "TelescopePrompt", "vim" },
 })
 
+-- Toggle term
+require("toggleterm").setup{}
+
 -- Mason LSP installer
 local mason_settings = {
 	ui = {
