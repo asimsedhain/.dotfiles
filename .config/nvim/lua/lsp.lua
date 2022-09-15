@@ -1,6 +1,11 @@
 local config = require("lspconfig")
 local api = vim.api
 
+local lsp_servers =
+	{ "pyright", "gopls", "html", "jsonls", "tsserver", "remark_ls", "rust_analyzer", "svelte", "cssls", "clangd" }
+
+require("mason-lspconfig").setup({ ensure_installed = lsp_servers })
+
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
@@ -10,50 +15,62 @@ local on_attach = function(client, bufnr)
 	-- Mappings.
 	-- See `:help vim.lsp.*` for documentation on any of the below functions
 	local bufopts = { noremap = true, silent = true, buffer = bufnr }
-	vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-	vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-	vim.keymap.set('n', 'gy', vim.lsp.buf.type_definition, bufopts)
-	vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-	vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-	vim.keymap.set('n', '<F2>', vim.lsp.buf.rename, bufopts)
-	vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-
+	vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
+	vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
+	vim.keymap.set("n", "gy", vim.lsp.buf.type_definition, bufopts)
+	vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
+	vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
+	vim.keymap.set("n", "<F2>", vim.lsp.buf.rename, bufopts)
+	vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
 
 	-- user command for formating and code actions
 	api.nvim_buf_create_user_command(bufnr, "Format", vim.lsp.buf.formatting, {})
 	api.nvim_buf_create_user_command(bufnr, "Caction", vim.lsp.buf.code_action, {})
 
-
 	-- highlighting on cursorhold
-	api.nvim_create_autocmd('CursorHold',
-		{
+	if client.resolved_capabilities.document_highlight then
+		api.nvim_create_autocmd("CursorHold", {
 			buffer = bufnr,
-			desc = 'Highlight symbol under cursor',
-			callback = vim.lsp.buf.document_highlight
+			desc = "Highlight symbol under cursor",
+			callback = vim.lsp.buf.document_highlight,
 		})
-	api.nvim_create_autocmd('CursorHoldI',
-		{
+
+		api.nvim_create_autocmd("CursorMoved", {
 			buffer = bufnr,
-			desc = 'Highlight symbol under cursor',
-			callback = vim.lsp.buf.document_highlight
+			desc = "Resets highlight symbol under cursor",
+			callback = vim.lsp.buf.clear_references,
 		})
-	api.nvim_create_autocmd('CursorMoved',
-		{
-			buffer = bufnr,
-			desc = 'Resets highlight symbol under cursor',
-			callback = vim.lsp.buf.clear_references
-		})
+	end
 end
 
-
--- lua setup
-config.sumneko_lua.setup { diagnostics = {
-	-- Get the language server to recognize the `vim` global
-	globals = { 'vim' }
-},
-	on_attach = on_attach }
+-- lua lsp setup
+config.sumneko_lua.setup({
+	on_attach = on_attach,
+	settings = {
+		Lua = {
+			runtime = {
+				-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+				version = "LuaJIT",
+				-- Setup your lua path
+				path = runtime_path,
+			},
+			diagnostics = {
+				-- Get the language server to recognize the `vim` global
+				globals = { "vim", "runtime_path" },
+			},
+			workspace = {
+				-- Make the server aware of Neovim runtime files
+				library = api.nvim_get_runtime_file("", true),
+			},
+			-- Do not send telemetry data containing a randomized but unique identifier
+			telemetry = {
+				enable = false,
+			},
+		},
+	},
+})
 
 -- generic lsp setup
-for _, v in pairs({ 'pyright' }) do
-	config[v].setup { on_attach = on_attach }
+for _, v in pairs(lsp_servers) do
+	config[v].setup({ on_attach = on_attach })
 end
