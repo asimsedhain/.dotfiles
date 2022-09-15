@@ -18,11 +18,14 @@ function ToggleTheme()
 		dark_mode = false
 		vim.cmd('colorscheme ' .. light_mode_theme)
 		g.airline_theme = light_mode_airline_theme
+
 	else
 		dark_mode = true
 		vim.cmd('colorscheme ' .. dark_mode_theme)
 		g.airline_theme = dark_mode_airline_theme
+	
 	end
+	vim.api.nvim_set_hl(0, 'WinSeparator', { bg = 'None', default = true })
 end
 
 -- Creating a user command for toggling theme
@@ -50,6 +53,7 @@ function SyncThemeWithSystem()
 		g.airline_theme = light_mode_airline_theme
 
 	end
+	vim.api.nvim_set_hl(0, 'WinSeparator', { bg = 'None', default = true })
 end
 
 SyncThemeWithSystem()

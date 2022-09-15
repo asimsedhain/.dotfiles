@@ -30,4 +30,3 @@ global_options.signcolumn = "yes"
 -- sets statusline to be global
 -- and sets border to be thin
 global_options.laststatus = 3
-vim.api.nvim_set_hl(0, 'WinSeparator', { bg = 'None', default = true })
