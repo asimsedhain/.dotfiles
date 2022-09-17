@@ -8,9 +8,7 @@ require("mason-lspconfig").setup({ ensure_installed = lsp_servers })
 
 -- nvim-cmp completion engine
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
-
 local cmp = require("cmp")
-
 cmp.setup({
 	window = {
 		completion = cmp.config.window.bordered(),
@@ -56,7 +54,10 @@ local on_attach = function(client, bufnr)
 	vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
 
 	-- user command for formating and code actions
-	api.nvim_buf_create_user_command(bufnr, "Format", vim.lsp.buf.formatting, {})
+	-- formates with null-ls first and then with other LSP
+	api.nvim_buf_create_user_command(bufnr, "Format", function()
+		vim.lsp.buf.formatting_seq_sync(nil, nil, { "null-ls" })
+	end, {})
 	api.nvim_buf_create_user_command(bufnr, "Caction", vim.lsp.buf.code_action, {})
 
 	-- highlighting on cursorhold
@@ -107,5 +108,5 @@ config.sumneko_lua.setup({
 
 -- generic lsp setup
 for _, v in pairs(lsp_servers) do
-	config[v].setup({ on_attach = on_attach })
+	config[v].setup({ on_attach = on_attach, capabilities = capabilities })
 end
