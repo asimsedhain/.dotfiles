@@ -9,9 +9,9 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
 " colorscheme
-Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 Plug 'sonph/onehalf', {'rtp': 'vim'}
 Plug 'EdenEast/nightfox.nvim', { 'tag': 'v1.0.0' }
+Plug 'olimorris/onedarkpro.nvim'
 
 " Utility plugin that other plugin use
 Plug 'nvim-lua/plenary.nvim'
