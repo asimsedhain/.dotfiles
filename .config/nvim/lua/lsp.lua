@@ -10,6 +10,7 @@ require("mason-lspconfig").setup({ ensure_installed = lsp_servers })
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
 local cmp = require("cmp")
 cmp.setup({
+	preselect = cmp.PreselectMode.None,
 	window = {
 		completion = cmp.config.window.bordered(),
 	},
@@ -30,10 +31,10 @@ cmp.setup({
 		end, { "i" }),
 	},
 	sources = cmp.config.sources({
-		{ name = "nvim_lsp" },
+		{ name = "buffer", max_item_count = 4 },
 	}, {
-		{ name = "buffer", keyword_length = 2 },
-	}, { { name = "path", keyword_length = 3 } }),
+		{ name = "nvim_lsp", max_item_count = 4 },
+	}, { { name = "path", keyword_length = 3, max_item_count = 3 } }),
 })
 
 -- Use an on_attach function to only map the following keys
@@ -45,7 +46,7 @@ local on_attach = function(client, bufnr)
 	-- Mappings.
 	-- See `:help vim.lsp.*` for documentation on any of the below functions
 	local bufopts = { noremap = true, silent = true, buffer = bufnr }
-	vim.keymap.set('n', '<space>d', vim.diagnostic.open_float, bufopts)
+	vim.keymap.set("n", "<space>d", vim.diagnostic.open_float, bufopts)
 	vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
 	vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
 	vim.keymap.set("n", "gy", vim.lsp.buf.type_definition, bufopts)
