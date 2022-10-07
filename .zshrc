@@ -105,7 +105,6 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 
 
 # adding python env
-
 export PATH="$PATH:/usr/local/include"
 export PATH="$PATH:/Users/ashimsedhain/Library/Python/3.8/bin"
 export PATH="$PATH:/Users/ashimsedhain/Library/Python/3.8/lib/python/site-packages"
@@ -121,17 +120,20 @@ alias dt='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias dtl='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME log --decorate --all --graph --oneline'
 
 
+# Cpp library paths
 export CPATH=/opt/homebrew/include
 export LIBRARY_PATH=/opt/homebrew/lib
 
+# Running simple cpp scripts
 runCpp(){
 	g++ -std=c++17 -lfmt "$1" -o ./tempCpp && ./tempCpp && rm ./tempCpp;
 }
 
 
-# Bash aliases
+# Common aliases
 alias ls="ls -lh"
 alias ta="tmux a"
+alias tls="tmux a"
 alias vim="nvim"
 
 # Git aliases
