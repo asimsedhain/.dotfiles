@@ -133,7 +133,7 @@ runCpp(){
 # Common aliases
 alias ls="ls -lh"
 alias ta="tmux a"
-alias tls="tmux a"
+alias tls="tmux ls"
 alias vim="nvim"
 
 # Git aliases
