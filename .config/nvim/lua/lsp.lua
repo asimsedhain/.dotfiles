@@ -2,7 +2,7 @@ local config = require("lspconfig")
 local api = vim.api
 
 local lsp_servers =
-{ "pyright", "gopls", "html", "jsonls", "tsserver", "remark_ls", "rust_analyzer", "svelte", "cssls", "clangd" }
+	{ "pyright", "gopls", "html", "jsonls", "tsserver", "remark_ls", "rust_analyzer", "svelte", "cssls", "clangd" }
 
 require("mason-lspconfig").setup({ ensure_installed = lsp_servers })
 
@@ -30,16 +30,11 @@ cmp.setup({
 			end
 		end, { "i" }),
 	},
-	sources = cmp.config.sources(
-		{
-			{ name = "buffer", max_item_count = 4 },
-		},
-		{
-			{ name = "nvim_lsp", max_item_count = 4 },
-		},
-		{ { name = "nvim_lsp_signature_help", max_item_count = 1 } },
-		{ { name = "path", keyword_length = 3, max_item_count = 3 } }
-	),
+	sources = cmp.config.sources({
+		{ name = "nvim_lsp", max_item_count = 4 },
+	}, { { name = "nvim_lsp_signature_help", max_item_count = 1 } }, {
+		{ name = "buffer", max_item_count = 4 },
+	}, { { name = "path", keyword_length = 3, max_item_count = 3 } }),
 })
 
 -- Use an on_attach function to only map the following keys
