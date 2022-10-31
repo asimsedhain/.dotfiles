@@ -7,7 +7,7 @@ g.gruvbox_contrast_dark = 'hard'
 
 local dark_mode = false
 
-local dark_mode_theme = 'carbonfox'
+local dark_mode_theme = 'nightfox'
 local dark_mode_airline_theme = 'onehalfdark'
 
 local light_mode_theme = 'dayfox'
