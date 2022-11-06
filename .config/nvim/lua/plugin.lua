@@ -33,7 +33,7 @@ require("nvim-autopairs").setup({
 })
 
 -- Toggle term
-require("toggleterm").setup{}
+require("toggleterm").setup({})
 
 -- Mason LSP installer
 local mason_settings = {
@@ -64,8 +64,6 @@ null_ls.setup({
 	sources = {
 		null_ls.builtins.code_actions.eslint_d,
 		null_ls.builtins.diagnostics.eslint_d,
-		null_ls.builtins.diagnostics.flake8,
-		null_ls.builtins.diagnostics.mypy,
 		null_ls.builtins.formatting.black,
 		null_ls.builtins.formatting.clang_format,
 		null_ls.builtins.formatting.prettier_standard,
@@ -75,13 +73,25 @@ null_ls.setup({
 	},
 })
 
-
-
--- NVIM tree-sitter for highlighting 
-require 'nvim-treesitter.configs'.setup {
+-- NVIM tree-sitter for highlighting
+require("nvim-treesitter.configs").setup({
 	-- A list of parser names, or "all"
-	ensure_installed = { "cpp", "lua", "rust", "go", "javascript", "json", "markdown", "toml", "tsx", "typescript", "python",
-		"svelte", "css", "html" },
+	ensure_installed = {
+		"cpp",
+		"lua",
+		"rust",
+		"go",
+		"javascript",
+		"json",
+		"markdown",
+		"toml",
+		"tsx",
+		"typescript",
+		"python",
+		"svelte",
+		"css",
+		"html",
+	},
 
 	-- Install parsers synchronously (only applied to `ensure_installed`)
 	sync_install = false,
@@ -111,4 +121,4 @@ require 'nvim-treesitter.configs'.setup {
 		-- Instead of true it can also be a list of languages
 		additional_vim_regex_highlighting = false,
 	},
-}
+})
