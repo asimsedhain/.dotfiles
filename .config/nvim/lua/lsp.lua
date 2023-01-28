@@ -63,7 +63,7 @@ local on_attach = function(client, bufnr)
 	api.nvim_buf_create_user_command(bufnr, "Caction", vim.lsp.buf.code_action, {})
 
 	-- highlighting on cursorhold
-	if client.resolved_capabilities.document_highlight then
+	if client.server_capabilities.document_highlight then
 		api.nvim_create_autocmd("CursorHold", {
 			buffer = bufnr,
 			desc = "Highlight symbol under cursor",
