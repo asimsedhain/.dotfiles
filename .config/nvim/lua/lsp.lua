@@ -1,8 +1,7 @@
 local config = require("lspconfig")
 local api = vim.api
 
-local lsp_servers =
-	{ "pyright", "gopls", "html", "jsonls", "tsserver", "remark_ls", "rust_analyzer", "svelte", "cssls", "clangd" }
+local lsp_servers = { "pyright", "gopls", "html", "jsonls", "tsserver", "rust_analyzer", "svelte", "cssls", "clangd" }
 
 require("mason-lspconfig").setup({ ensure_installed = lsp_servers })
 
