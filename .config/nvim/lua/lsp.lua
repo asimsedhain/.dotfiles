@@ -1,9 +1,42 @@
 local config = require("lspconfig")
+local keys = require("utils").keys
 local api = vim.api
 
-local lsp_servers = { "pyright", "gopls", "html", "jsonls", "tsserver", "rust_analyzer", "svelte", "cssls", "clangd" }
+local lsp_servers = {
+	pyright = {},
+	gopls = {},
+	html = {},
+	jsonls = {},
+	tsserver = {},
+	rust_analyzer = {},
+	svelte = {},
+	cssls = {},
+	clangd = {},
+	sumneko_lua = {
+		Lua = {
+			runtime = {
+				-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+				version = "LuaJIT",
+				-- Setup your lua path
+				path = runtime_path,
+			},
+			diagnostics = {
+				-- Get the language server to recognize the `vim` global
+				globals = { "vim", "runtime_path" },
+			},
+			workspace = {
+				-- Make the server aware of Neovim runtime files
+				library = api.nvim_get_runtime_file("", true),
+			},
+			-- Do not send telemetry data containing a randomized but unique identifier
+			telemetry = {
+				enable = false,
+			},
+		},
+	},
+}
 
-require("mason-lspconfig").setup({ ensure_installed = lsp_servers })
+require("mason-lspconfig").setup({ ensure_installed = keys(lsp_servers) })
 
 -- nvim-cmp completion engine
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
@@ -79,35 +112,8 @@ end
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
--- lua lsp setup
-config.sumneko_lua.setup({
-	capabilities = capabilities,
-	on_attach = on_attach,
-	settings = {
-		Lua = {
-			runtime = {
-				-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-				version = "LuaJIT",
-				-- Setup your lua path
-				path = runtime_path,
-			},
-			diagnostics = {
-				-- Get the language server to recognize the `vim` global
-				globals = { "vim", "runtime_path" },
-			},
-			workspace = {
-				-- Make the server aware of Neovim runtime files
-				library = api.nvim_get_runtime_file("", true),
-			},
-			-- Do not send telemetry data containing a randomized but unique identifier
-			telemetry = {
-				enable = false,
-			},
-		},
-	},
-})
-
 -- generic lsp setup
-for _, v in pairs(lsp_servers) do
-	config[v].setup({ on_attach = on_attach, capabilities = capabilities })
+-- you can change the individual settings by modifying the table above
+for lsp_server, settings in pairs(lsp_servers) do
+	config[lsp_server].setup({ on_attach = on_attach, capabilities = capabilities, settings = settings })
 end
