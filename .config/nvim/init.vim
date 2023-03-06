@@ -21,9 +21,6 @@ Plug 'nvim-telescope/telescope.nvim'
 " pairs completer
 Plug 'windwp/nvim-autopairs'
 
-" terminal toggle plugin
-Plug 'akinsho/toggleterm.nvim'
-
 " LSP
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
