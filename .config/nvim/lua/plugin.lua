@@ -94,7 +94,14 @@ local lsp_servers = {
 	html = {},
 	jsonls = {},
 	tsserver = {},
-	rust_analyzer = {},
+	rust_analyzer = {
+		["rust-analyzer"] = {
+			-- enable clippy on save
+			checkOnSave = {
+				command = "clippy",
+			},
+		},
+	},
 	svelte = {},
 	cssls = {},
 	clangd = {},
