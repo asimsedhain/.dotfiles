@@ -183,7 +183,7 @@ local on_attach = function(client, bufnr)
 	-- user command for formating and code actions
 	-- formates with null-ls first and then with other LSP
 	api.nvim_buf_create_user_command(bufnr, "Format", function()
-		vim.lsp.buf.formatting_seq_sync(nil, nil, { "null-ls" })
+		vim.lsp.buf.format(nil, nil, { "null-ls" })
 	end, {})
 	api.nvim_buf_create_user_command(bufnr, "Caction", vim.lsp.buf.code_action, {})
 
