@@ -131,7 +131,8 @@ runCpp(){
 
 
 # Common aliases
-alias ls="ls -lh"
+alias ls="exa -lh"
+alias la="exa -lha"
 alias ta="tmux a"
 alias tls="tmux ls"
 alias vim="nvim"
@@ -164,3 +165,4 @@ export EDITOR="nvim"
 export VISUAL="nvim"
 
 
+export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"

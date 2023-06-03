@@ -12,6 +12,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'sonph/onehalf', {'rtp': 'vim'}
 Plug 'EdenEast/nightfox.nvim', { 'tag': 'v1.0.0' }
 Plug 'olimorris/onedarkpro.nvim'
+Plug 'rebelot/kanagawa.nvim'
 
 " Utility plugin that other plugin use
 Plug 'nvim-lua/plenary.nvim'
