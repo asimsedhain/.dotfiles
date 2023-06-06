@@ -186,8 +186,8 @@ local on_attach = function(client, bufnr)
 		vim.lsp.buf.format(nil, nil, { "null-ls" })
 	end, {})
 	api.nvim_buf_create_user_command(bufnr, "Caction", vim.lsp.buf.code_action, {})
-	api.nvim_buf_create_user_command(bufnr, "Nerror", vim.diagnostic.goto_next, {})
-	api.nvim_buf_create_user_command(bufnr, "Perror", vim.diagnostic.goto_prev, {})
+	api.nvim_buf_create_user_command(bufnr, "Enext", vim.diagnostic.goto_next, {})
+	api.nvim_buf_create_user_command(bufnr, "Eprev", vim.diagnostic.goto_prev, {})
 
 	-- highlighting on cursorhold
 	if client.server_capabilities.document_highlight then
