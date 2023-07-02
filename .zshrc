@@ -135,6 +135,7 @@ alias ls="exa -lh"
 alias la="exa -lha"
 alias ta="tmux a"
 alias tls="tmux ls"
+alias tms="sh ~/.config/tmux-sessionizer"
 alias vim="nvim"
 
 # Git aliases
