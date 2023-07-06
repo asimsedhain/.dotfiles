@@ -1,25 +1,33 @@
 #!/usr/bin/env bash
 
-if [[ $# -eq 1 ]]; then
+if [ $# -eq 1 ]; then
     selected=$1
 else
-    selected=$(fd . ~/Repo --type d --max-depth 1 --absolute-path | fzf)
+    selected=$(fd . ~/Repo ~/.config --type d --max-depth 1 --absolute-path | sk --color=matched_bg:231)
 fi
 
-if [[ -z $selected ]]; then
+if [ -z $selected ]; then
     exit 0
 fi
 
 selected_name=$(basename "$selected" | tr . _)
 tmux_running=$(pgrep tmux)
 
-if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
+# if not inside tmux and tmux is not running
+#
+if [ -z $TMUX ] && [ -z $tmux_running ]; then
     tmux new-session -s $selected_name -c $selected
     exit 0
 fi
 
+# check if tmux already has that session, if not then create session in detached mode
 if ! tmux has-session -t=$selected_name 2> /dev/null; then
     tmux new-session -ds $selected_name -c $selected
 fi
 
-tmux switch-client -t $selected_name
+# if outside of tmux then attach else switch
+if [ -z $TMUX ]; then
+	tmux a -t $selected_name
+else
+	tmux switch-client -t $selected_name
+fi
