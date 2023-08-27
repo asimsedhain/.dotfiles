@@ -124,6 +124,9 @@ alias dtl='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME log --decor
 export CPATH=/opt/homebrew/include
 export LIBRARY_PATH=/opt/homebrew/lib
 
+# rust bin path
+export PATH="$PATH:~/.cargo/bin"
+
 # Running simple cpp scripts
 runCpp(){
 	g++ -std=c++17 -lfmt "$1" -o ./tempCpp && ./tempCpp && rm ./tempCpp;
