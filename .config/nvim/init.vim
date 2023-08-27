@@ -13,6 +13,7 @@ Plug 'sonph/onehalf', {'rtp': 'vim'}
 Plug 'EdenEast/nightfox.nvim', { 'tag': 'v1.0.0' }
 Plug 'olimorris/onedarkpro.nvim'
 Plug 'rebelot/kanagawa.nvim'
+Plug 'rmehri01/onenord.nvim', { 'branch': 'main' }
 
 " Utility plugin that other plugin use
 Plug 'nvim-lua/plenary.nvim'
