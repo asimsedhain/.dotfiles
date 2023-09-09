@@ -134,8 +134,8 @@ runCpp(){
 
 
 # Common aliases
-alias ls="exa -lh"
-alias la="exa -lha"
+alias ls="eza -lh"
+alias la="eza -lha"
 alias ta="tmux a"
 alias tls="tmux ls"
 alias tms="sh ~/.config/tmux-sessionizer"
