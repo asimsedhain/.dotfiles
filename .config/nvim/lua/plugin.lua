@@ -91,6 +91,7 @@ require("nvim-treesitter.configs").setup({
 -- LSP servers and settings
 local lsp_servers = {
 	pyright = {},
+	ruff_lsp = {},
 	gopls = {},
 	html = {},
 	jsonls = {},
@@ -104,7 +105,14 @@ local lsp_servers = {
 		},
 	},
 	svelte = {},
-	cssls = {},
+	cssls = {
+		css = {
+			lint = {
+				unknownAtRules = "ignore",
+			},
+		},
+	},
+	tailwindcss = {},
 	clangd = {},
 	lua_ls = {
 		Lua = {
@@ -159,7 +167,19 @@ cmp.setup({
 	sources = cmp.config.sources({
 		{ name = "nvim_lsp", max_item_count = 6 },
 	}, { { name = "nvim_lsp_signature_help", max_item_count = 1 } }, {
-		{ name = "buffer", max_item_count = 4 },
+		{
+			name = "buffer",
+			max_item_count = 3,
+			option = {
+				get_bufnrs = function()
+					local bufs = {}
+					for _, win in ipairs(vim.api.nvim_list_wins()) do
+						bufs[vim.api.nvim_win_get_buf(win)] = true
+					end
+					return vim.tbl_keys(bufs)
+				end,
+			},
+		},
 	}, { { name = "path", keyword_length = 3, max_item_count = 3 } }),
 })
 
