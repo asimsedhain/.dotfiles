@@ -10,7 +10,7 @@ global_options.writebackup = false
 global_options.cmdheight = 3
 
 --  Having longer updatetime (default is 4000 ms = 4 s leads to noticeable) delays and poor user experience.
-global_options.updatetime = 50
+--global_options.updatetime = 50
 
 global_options.spelllang = "en"
 
