@@ -238,3 +238,13 @@ local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protoc
 for lsp_server, settings in pairs(lsp_servers) do
 	config[lsp_server].setup({ on_attach = on_attach, capabilities = capabilities, settings = settings })
 end
+
+-- adding autocmd for yamlfmt since it does not have a lsp server
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+	pattern = "*.{yml,yaml}",
+	callback = function(args)
+		api.nvim_buf_create_user_command(args.buf, "Format", function()
+			vim.lsp.buf.format(nil, nil, { "null-ls" })
+		end, {})
+	end,
+})
