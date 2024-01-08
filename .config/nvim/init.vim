@@ -16,7 +16,9 @@ Plug 'rebelot/kanagawa.nvim'
 Plug 'rmehri01/onenord.nvim', { 'branch': 'main' }
 
 " Utility plugin that other plugin use
-Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-lua/plenary.nvim' " Telescope, ChatGPT
+Plug 'muniftanjim/nui.nvim' " ChatGPT
+
 " Fuzzy finder
 Plug 'nvim-telescope/telescope.nvim'
 
@@ -36,6 +38,10 @@ Plug 'hrsh7th/cmp-nvim-lsp-signature-help'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/nvim-cmp'
+
+" ChatGPT
+Plug 'jackMort/ChatGPT.nvim'
+
 
 call plug#end()
 

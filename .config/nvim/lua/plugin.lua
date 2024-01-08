@@ -1,4 +1,5 @@
 local config = require("lspconfig")
+local chatgpt = require("chatgpt")
 local keys = require("utils").keys
 local api = vim.api
 
@@ -247,4 +248,9 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 			vim.lsp.buf.format(nil, nil, { "null-ls" })
 		end, {})
 	end,
+})
+
+-- ChatGPT
+chatgpt.setup({
+	api_key_cmd = "security find-generic-password -s openai -w",
 })
