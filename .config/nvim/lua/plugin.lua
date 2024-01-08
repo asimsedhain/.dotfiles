@@ -253,4 +253,20 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 -- ChatGPT
 chatgpt.setup({
 	api_key_cmd = "security find-generic-password -s openai -w",
+	chat = {
+		welcome_message = "Start Asking....",
+		loading_text = "Loading, please wait ...",
+		question_sign = "🙋", -- 🙂
+		answer_sign = "🤖", -- 🤖
+		border_left_sign = "▙",
+		border_right_sign = "▜",
+		sessions_window = {
+			active_sign = "🟩 ",
+			inactive_sign = " ⬜️",
+			current_line_sign = "►",
+		},
+	},
+	popup_input = {
+		prompt = " 🟢 ",
+	},
 })
