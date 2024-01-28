@@ -21,4 +21,15 @@ function M.keys(table)
 	return key_table
 end
 
+-- Returns a copy of the array with the element removed
+function M.removeElement(arr, element)
+	local copy = {}
+    for _, value in ipairs(arr) do
+        if value ~= element then
+            table.insert(copy, value)
+        end
+    end
+    return copy
+end
+
 return M

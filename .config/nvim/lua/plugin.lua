@@ -1,6 +1,7 @@
 local config = require("lspconfig")
 local chatgpt = require("chatgpt")
 local keys = require("utils").keys
+local removeElement = require("utils").removeElement
 local api = vim.api
 
 -- Auto pairs
@@ -109,8 +110,11 @@ local lsp_servers = {
 	rust_analyzer = {
 		["rust-analyzer"] = {
 			-- enable clippy on save
-			checkOnSave = {
+			check = {
 				command = "clippy",
+			},
+			diagnostics = {
+				enable = true,
 			},
 		},
 	},
@@ -148,7 +152,8 @@ local lsp_servers = {
 	},
 }
 
-require("mason-lspconfig").setup({ ensure_installed = keys(lsp_servers) })
+local lsp_servers_to_install = removeElement(keys(lsp_servers), "rust_analyzer") -- use the local rust_analyzer installed by rustup installed of allowing mason to install it.
+require("mason-lspconfig").setup({ ensure_installed = lsp_servers_to_install })
 
 -- nvim-cmp completion engine
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
