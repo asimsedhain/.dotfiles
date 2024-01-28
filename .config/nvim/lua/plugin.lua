@@ -8,6 +8,16 @@ require("nvim-autopairs").setup({
 	disable_filetype = { "TelescopePrompt", "vim" },
 })
 
+-- Set diagnostics to show source
+vim.diagnostic.config({
+	virtual_text = {
+		source = "if_many",
+	},
+	float = {
+		source = "always",
+	},
+})
+
 -- Mason LSP installer
 local mason_settings = {
 	ui = {
@@ -33,14 +43,11 @@ require("mason").setup(mason_settings)
 local null_ls = require("null-ls")
 null_ls.setup({
 	sources = {
-		null_ls.builtins.code_actions.eslint_d,
-		null_ls.builtins.diagnostics.eslint_d,
 		null_ls.builtins.formatting.black,
 		null_ls.builtins.formatting.clang_format,
 		null_ls.builtins.formatting.prettier_standard,
 		null_ls.builtins.formatting.stylua,
 		null_ls.builtins.formatting.yamlfmt,
-		null_ls.builtins.formatting.dprint,
 	},
 })
 
@@ -97,6 +104,8 @@ local lsp_servers = {
 	html = {},
 	jsonls = {},
 	tsserver = {},
+	eslint = {},
+	marksman = {},
 	rust_analyzer = {
 		["rust-analyzer"] = {
 			-- enable clippy on save
