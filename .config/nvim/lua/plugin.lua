@@ -12,7 +12,7 @@ require("nvim-autopairs").setup({
 -- Set diagnostics to show source
 vim.diagnostic.config({
 	virtual_text = {
-		source = "if_many",
+		source = false,
 	},
 	float = {
 		source = "always",
