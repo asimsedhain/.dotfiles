@@ -10,7 +10,7 @@ local dark_mode = false
 local dark_mode_theme = "kanagawa-dragon"
 local dark_mode_airline_theme = "onehalfdark"
 
-local light_mode_theme = "onenord-light"
+local light_mode_theme = "rose-pine-dawn"
 local light_mode_airline_theme = "onehalflight"
 
 function ToggleTheme()

@@ -2,7 +2,7 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-fugitive'
-Plug 'wellle/context.vim'
+Plug 'nvim-treesitter/nvim-treesitter-context'
 
 " Airline
 Plug 'vim-airline/vim-airline'
@@ -10,10 +10,10 @@ Plug 'vim-airline/vim-airline-themes'
 
 " colorscheme
 Plug 'sonph/onehalf', {'rtp': 'vim'}
-Plug 'EdenEast/nightfox.nvim', { 'tag': 'v1.0.0' }
-Plug 'olimorris/onedarkpro.nvim'
 Plug 'rebelot/kanagawa.nvim'
 Plug 'rmehri01/onenord.nvim', { 'branch': 'main' }
+Plug 'rose-pine/neovim', { 'as': 'rose-pine' }
+Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 
 " Utility plugin that other plugin use
 Plug 'nvim-lua/plenary.nvim' " Telescope, ChatGPT
