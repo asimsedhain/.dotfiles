@@ -4,6 +4,24 @@ local keys = require("utils").keys
 local removeElement = require("utils").removeElement
 local api = vim.api
 
+-- Lualine
+require("lualine").setup({
+	options = {
+		icons_enabled = false,
+		theme = "auto",
+		component_separators = { left = "", right = "" },
+		section_separators = { left = "", right = "" },
+	},
+	sections = {
+		lualine_a = { "mode" },
+		lualine_b = { "branch", "filename" },
+		lualine_c = { "diagnostics" },
+		lualine_x = { "searchcount", "diff", "hostname" },
+		lualine_y = { "filetype", "progress" },
+		lualine_z = { "location" },
+	},
+})
+
 -- Auto pairs
 require("nvim-autopairs").setup({
 	disable_filetype = { "TelescopePrompt", "vim" },

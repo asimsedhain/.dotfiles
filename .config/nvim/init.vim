@@ -4,14 +4,11 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-fugitive'
 Plug 'nvim-treesitter/nvim-treesitter-context'
 
-" Airline
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+" Lualine
+Plug 'nvim-lualine/lualine.nvim'
 
 " colorscheme
-Plug 'sonph/onehalf', {'rtp': 'vim'}
 Plug 'rebelot/kanagawa.nvim'
-Plug 'rmehri01/onenord.nvim', { 'branch': 'main' }
 Plug 'rose-pine/neovim', { 'as': 'rose-pine' }
 Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 
