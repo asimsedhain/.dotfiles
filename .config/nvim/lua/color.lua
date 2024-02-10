@@ -11,6 +11,17 @@ local dark_mode_theme = "kanagawa-dragon"
 
 local light_mode_theme = "rose-pine-dawn"
 
+-- rose-pine is a pain and does not come with highlight_groups for git
+require("rose-pine").setup({
+	highlight_groups = {
+		DiffAdded = { fg = "pine" },
+		DiffRemoved = { fg = "love" },
+		DiffChange = { fg = "rose" },
+		DiffDelete = { fg = "love" },
+		DiffText = { fg = "rose" },
+	},
+})
+
 function ToggleTheme()
 	if dark_mode then
 		dark_mode = false
