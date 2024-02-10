@@ -14,7 +14,7 @@ require("lualine").setup({
 	},
 	sections = {
 		lualine_a = { "mode" },
-		lualine_b = { "branch", "filename" },
+		lualine_b = { "branch", { "filename", path = 1 } },
 		lualine_c = { "diagnostics" },
 		lualine_x = { "searchcount", "diff", "hostname" },
 		lualine_y = { "filetype", "progress" },
