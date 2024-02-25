@@ -316,7 +316,7 @@ chatgpt.setup({
 		model = "gpt-4-turbo-preview",
 		frequency_penalty = 0,
 		presence_penalty = 0,
-		max_tokens = 300,
+		max_tokens = 600,
 		temperature = 0,
 		top_p = 1,
 		n = 1,
