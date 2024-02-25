@@ -73,12 +73,6 @@ map("i", ".", ".<c-g>u")
 map("i", "!", "!<c-g>u")
 map("i", "?", "?<c-g>u")
 
--- Remaps for plugin features
--- variables to modify Vim Airline
-g["airline_section_y"] = ""
-g["airline_section_warning"] = ""
-g["airline_section_z"] = "%p%%"
-
 -- Fugitive remap
 map("n", "<SPACE>gl", ":Git! log --decorate --oneline --graph --all<CR>")
 map("n", "<SPACE>gs", ":G<CR>")
