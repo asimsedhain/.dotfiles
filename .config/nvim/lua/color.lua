@@ -22,6 +22,22 @@ require("rose-pine").setup({
 	},
 })
 
+-- kanagawa does not highlight borders properly
+require("kanagawa").setup({
+	overrides = function(colors)
+		local theme = colors.theme
+		return {
+			-- have sharp borders
+			WinSeparator = { fg = theme.ui.fg },
+
+			-- give sharp borders to telescope
+			TelescopePromptBorder = { fg = theme.ui.fg, bg = "None" },
+			TelescopeResultsBorder = { fg = theme.ui.fg, bg = "None" },
+			TelescopePreviewBorder = { fg = theme.ui.fg, bg = "None" },
+		}
+	end,
+})
+
 function ToggleTheme()
 	if dark_mode then
 		dark_mode = false
