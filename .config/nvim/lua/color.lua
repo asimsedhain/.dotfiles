@@ -11,33 +11,6 @@ local dark_mode_theme = "kanagawa-dragon"
 
 local light_mode_theme = "rose-pine-dawn"
 
--- rose-pine is a pain and does not come with highlight_groups for git
-require("rose-pine").setup({
-	highlight_groups = {
-		DiffAdded = { fg = "pine" },
-		DiffRemoved = { fg = "love" },
-		DiffChange = { fg = "rose" },
-		DiffDelete = { fg = "love" },
-		DiffText = { fg = "rose" },
-	},
-})
-
--- kanagawa does not highlight borders properly
-require("kanagawa").setup({
-	overrides = function(colors)
-		local theme = colors.theme
-		return {
-			-- have sharp borders
-			WinSeparator = { fg = theme.ui.fg },
-
-			-- give sharp borders to telescope
-			TelescopePromptBorder = { fg = theme.ui.fg, bg = "None" },
-			TelescopeResultsBorder = { fg = theme.ui.fg, bg = "None" },
-			TelescopePreviewBorder = { fg = theme.ui.fg, bg = "None" },
-		}
-	end,
-})
-
 function ToggleTheme()
 	if dark_mode then
 		dark_mode = false
