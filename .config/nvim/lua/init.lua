@@ -13,9 +13,24 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-	"scrooloose/nerdcommenter",
-	{ "tpope/vim-fugitive",            lazy = true,                               cmd = "Git" },
-	"nvim-treesitter/nvim-treesitter-context",
+	{ "scrooloose/nerdcommenter", lazy = true, event = "InsertEnter" },
+	{ "tpope/vim-fugitive",       lazy = true, cmd = "Git" },
+	{
+		"nvim-treesitter/nvim-treesitter-context",
+		lazy = true,
+		event = "InsertEnter",
+		config = function()
+			-- Context
+			require("treesitter-context").setup({
+				enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+				max_lines = 4, -- How many lines the window should span. Values <= 0 mean no limit.
+				multiline_threshold = 2, -- Maximum number of lines to show for a single context
+				-- Separator between context and content. Should be a single character string, like '-'.
+				-- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
+				separator = nil,
+			})
+		end,
+	},
 
 	-- Lualine,
 	"nvim-lualine/lualine.nvim",
@@ -70,7 +85,17 @@ require("lazy").setup({
 	{ "nvim-telescope/telescope.nvim", dependencies = { "nvim-lua/plenary.nvim" } },
 
 	-- pairs completer,
-	"windwp/nvim-autopairs",
+	{
+		"windwp/nvim-autopairs",
+		lazy = true,
+		event = "InsertEnter",
+		config = function()
+			-- Auto pairs
+			require("nvim-autopairs").setup({
+				disable_filetype = { "TelescopePrompt", "vim" },
+			})
+		end,
+	},
 
 	-- LSP
 	"neovim/nvim-lspconfig",
@@ -82,12 +107,13 @@ require("lazy").setup({
 	"williamboman/mason.nvim",
 	"williamboman/mason-lspconfig.nvim",
 	"jose-elias-alvarez/null-ls.nvim",
+
 	-- LSP completion
-	"hrsh7th/cmp-nvim-lsp",
-	"hrsh7th/cmp-nvim-lsp-signature-help",
-	"hrsh7th/cmp-buffer",
-	"hrsh7th/cmp-path",
-	"hrsh7th/nvim-cmp",
+	{ "hrsh7th/cmp-nvim-lsp",                lazy = true, event = "InsertEnter" },
+	{ "hrsh7th/cmp-nvim-lsp-signature-help", lazy = true, event = "InsertEnter" },
+	{ "hrsh7th/cmp-buffer",                  lazy = true, event = "InsertEnter" },
+	{ "hrsh7th/cmp-path",                    lazy = true, event = "InsertEnter" },
+	{ "hrsh7th/nvim-cmp",                    lazy = true, event = "InsertEnter" },
 
 	-- ChatGPT
 	{
