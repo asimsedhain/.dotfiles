@@ -117,6 +117,7 @@ export NVM_DIR="$HOME/.nvm"
 
 # manage dotfiles
 alias dt='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias dts='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME status'
 alias dtl='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME log --decorate --all --graph --oneline'
 
 
