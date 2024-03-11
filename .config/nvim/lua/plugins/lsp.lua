@@ -27,21 +27,8 @@ vim.diagnostic.config({
 local mason_settings = {
 	ui = {
 		-- The border to use for the UI window. Accepts same border values as |nvim_open_win()|.
-		border = "none",
+		border = 'single',
 	},
-	pip = {
-		-- These args will be added to `pip install` calls. Note that setting extra args might impact intended behavior
-		-- and is not recommended.
-		--
-		-- Example: { "--proxy", "https://proxyserver" }
-		install_args = {},
-	},
-	-- Controls to which degree logs are written to the log file. It's useful to set this to vim.log.levels.DEBUG when
-	-- debugging issues with package installations.
-	log_level = vim.log.levels.INFO,
-	-- Limit for the maximum amount of packages to be installed at the same time. Once this limit is reached, any further
-	-- packages that are requested to be installed will be put in a queue.
-	max_concurrent_installers = 4,
 }
 
 -- LSP servers and settings
@@ -162,6 +149,7 @@ return {
 		config = function()
 			require("mason").setup(mason_settings)
 		end,
+		build = ":MasonUpdate",
 	},
 	{
 		"williamboman/mason-lspconfig.nvim",
@@ -194,6 +182,7 @@ return {
 
 	{
 		"neovim/nvim-lspconfig",
+		event = "VeryLazy",
 		dependencies = { "hrsh7th/cmp-nvim-lsp" },
 		config = function()
 			local config = require("lspconfig")
@@ -211,6 +200,11 @@ return {
 	{
 		"hrsh7th/nvim-cmp",
 		lazy = true,
+		dependencies = {
+			"hrsh7th/cmp-nvim-lsp",
+			"hrsh7th/cmp-buffer",
+			"hrsh7th/cmp-path",
+		},
 		event = "InsertEnter",
 		config = function()
 			-- nvim-cmp completion engine

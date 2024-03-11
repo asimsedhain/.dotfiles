@@ -34,6 +34,6 @@ require("lazy").setup("plugins", {
 
 -- require other modules
 
+require("color")
 require("sets")
 require("remap")
-require("color")

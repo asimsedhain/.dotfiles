@@ -33,14 +33,10 @@ function SyncThemeWithSystem()
 
 	local sys_theme = system("defaults read -g AppleInterfaceStyle")
 
-	print("Syncing theme with system...")
-
 	if string.find(sys_theme, "Dark") then
-		print("Theme: dark  colorscheme: " .. dark_mode_theme)
-		dark_mode = true
 		vim.cmd("colorscheme " .. dark_mode_theme)
+		dark_mode = true
 	else
-		print("Theme: light  colorscheme: " .. light_mode_theme)
 		dark_mode = false
 		vim.cmd("colorscheme " .. light_mode_theme)
 	end
