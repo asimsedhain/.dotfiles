@@ -3,6 +3,7 @@ local keys = require("utils").keys
 local removeElement = require("utils").removeElement
 
 -- adding autocmd for yamlfmt since it does not have a lsp server
+-- but null-ls supports formatting yaml file
 api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 	pattern = "*.{yml,yaml}",
 	callback = function(args)

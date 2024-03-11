@@ -36,6 +36,7 @@ return {
 	-- better status line
 	{
 		"nvim-lualine/lualine.nvim",
+		event = 'VeryLazy',
 		config = function()
 			-- Lualine
 			require("lualine").setup({
