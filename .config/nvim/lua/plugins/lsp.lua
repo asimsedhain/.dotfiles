@@ -1,24 +1,15 @@
-local config = require("lspconfig")
+local api = vim.api
 local keys = require("utils").keys
 local removeElement = require("utils").removeElement
-local api = vim.api
 
--- Lualine
-require("lualine").setup({
-	options = {
-		icons_enabled = false,
-		theme = "auto",
-		component_separators = { left = "", right = "" },
-		section_separators = { left = "", right = "" },
-	},
-	sections = {
-		lualine_a = { "mode" },
-		lualine_b = { "branch", { "filename", path = 1 } },
-		lualine_c = { "diagnostics" },
-		lualine_x = { "searchcount", "diff", "hostname" },
-		lualine_y = { "filetype", "progress" },
-		lualine_z = { "location" },
-	},
+-- adding autocmd for yamlfmt since it does not have a lsp server
+api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+	pattern = "*.{yml,yaml}",
+	callback = function(args)
+		api.nvim_buf_create_user_command(args.buf, "Format", function()
+			vim.lsp.buf.format(nil, nil, { "null-ls" })
+		end, {})
+	end,
 })
 
 -- Set diagnostics to show source
@@ -51,17 +42,6 @@ local mason_settings = {
 	-- packages that are requested to be installed will be put in a queue.
 	max_concurrent_installers = 4,
 }
-require("mason").setup(mason_settings)
-
-local null_ls = require("null-ls")
-null_ls.setup({
-	sources = {
-		null_ls.builtins.formatting.black,
-		null_ls.builtins.formatting.clang_format,
-		null_ls.builtins.formatting.prettier_standard,
-		null_ls.builtins.formatting.yamlfmt,
-	},
-})
 
 -- LSP servers and settings
 local lsp_servers = {
@@ -118,52 +98,6 @@ local lsp_servers = {
 	},
 }
 
-local lsp_servers_to_install = removeElement(keys(lsp_servers), "rust_analyzer") -- use the local rust_analyzer installed by rustup installed of allowing mason to install it.
-require("mason-lspconfig").setup({ ensure_installed = lsp_servers_to_install })
-
--- nvim-cmp completion engine
-vim.opt.completeopt = { "menu", "menuone", "noselect" }
-local cmp = require("cmp")
-cmp.setup({
-	preselect = cmp.PreselectMode.None,
-	window = {
-		completion = cmp.config.window.bordered(),
-	},
-	mapping = {
-		["<C-n>"] = cmp.mapping(function()
-			if cmp.visible() then
-				cmp.select_next_item()
-			else
-				cmp.complete()
-			end
-		end, { "i" }),
-		["<C-p>"] = cmp.mapping(function()
-			if cmp.visible() then
-				cmp.select_prev_item()
-			else
-				cmp.complete()
-			end
-		end, { "i" }),
-	},
-	sources = cmp.config.sources({
-		{ name = "nvim_lsp", max_item_count = 6 },
-	}, { { name = "nvim_lsp_signature_help", max_item_count = 1 } }, {
-		{
-			name = "buffer",
-			max_item_count = 3,
-			option = {
-				get_bufnrs = function()
-					local bufs = {}
-					for _, win in ipairs(vim.api.nvim_list_wins()) do
-						bufs[vim.api.nvim_win_get_buf(win)] = true
-					end
-					return vim.tbl_keys(bufs)
-				end,
-			},
-		},
-	}, { { name = "path", keyword_length = 3, max_item_count = 3 } }),
-})
-
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
@@ -216,20 +150,110 @@ local on_attach = function(client, bufnr)
 	end
 end
 
-local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
+-- return exports the whole module
+-- lazy will stitch all the everything together
+-- https://github.com/folke/lazy.nvim?tab=readme-ov-file#-structuring-your-plugins
+return {
 
--- generic lsp setup
--- you can change the individual settings by modifying the table above
-for lsp_server, settings in pairs(lsp_servers) do
-	config[lsp_server].setup({ on_attach = on_attach, capabilities = capabilities, settings = settings })
-end
+	-- LSP manager
+	{
+		"williamboman/mason.nvim",
+		config = function()
+			require("mason").setup(mason_settings)
+		end,
+	},
+	{
+		"williamboman/mason-lspconfig.nvim",
+		dependencies = { "williamboman/mason.nvim" },
+		config = function()
+			local lsp_servers_to_install = removeElement(keys(lsp_servers), "rust_analyzer") -- use the local rust_analyzer installed by rustup installed of allowing mason to install it.
+			require("mason-lspconfig").setup({ ensure_installed = lsp_servers_to_install })
+		end,
+	},
+	{
+		"jose-elias-alvarez/null-ls.nvim",
+		config = function()
+			local null_ls = require("null-ls")
+			null_ls.setup({
+				sources = {
+					null_ls.builtins.formatting.black,
+					null_ls.builtins.formatting.clang_format,
+					null_ls.builtins.formatting.prettier_standard,
+					null_ls.builtins.formatting.yamlfmt,
+				},
+			})
+		end,
+	},
+	-- LSP completion
+	{
+		"hrsh7th/cmp-nvim-lsp",
+		lazy = true,
+		event = "InsertEnter",
+	},
 
--- adding autocmd for yamlfmt since it does not have a lsp server
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-	pattern = "*.{yml,yaml}",
-	callback = function(args)
-		api.nvim_buf_create_user_command(args.buf, "Format", function()
-			vim.lsp.buf.format(nil, nil, { "null-ls" })
-		end, {})
-	end,
-})
+	{
+		"neovim/nvim-lspconfig",
+		dependencies = { "hrsh7th/cmp-nvim-lsp" },
+		config = function()
+			local config = require("lspconfig")
+			local capabilities =
+				require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
+
+			for lsp_server, settings in pairs(lsp_servers) do
+				config[lsp_server].setup({ on_attach = on_attach, capabilities = capabilities, settings = settings })
+			end
+		end,
+	},
+	{ "hrsh7th/cmp-nvim-lsp-signature-help", lazy = true, event = "InsertEnter" },
+	{ "hrsh7th/cmp-buffer",                  lazy = true, event = "InsertEnter" },
+	{ "hrsh7th/cmp-path",                    lazy = true, event = "InsertEnter" },
+	{
+		"hrsh7th/nvim-cmp",
+		lazy = true,
+		event = "InsertEnter",
+		config = function()
+			-- nvim-cmp completion engine
+			vim.opt.completeopt = { "menu", "menuone", "noselect" }
+			local cmp = require("cmp")
+			cmp.setup({
+				preselect = cmp.PreselectMode.None,
+				window = {
+					completion = cmp.config.window.bordered(),
+				},
+				mapping = {
+					["<C-n>"] = cmp.mapping(function()
+						if cmp.visible() then
+							cmp.select_next_item()
+						else
+							cmp.complete()
+						end
+					end, { "i" }),
+					["<C-p>"] = cmp.mapping(function()
+						if cmp.visible() then
+							cmp.select_prev_item()
+						else
+							cmp.complete()
+						end
+					end, { "i" }),
+				},
+				sources = cmp.config.sources({
+					{ name = "nvim_lsp", max_item_count = 6 },
+				}, { { name = "nvim_lsp_signature_help", max_item_count = 1 } }, {
+					{
+						name = "buffer",
+						max_item_count = 3,
+						option = {
+							get_bufnrs = function()
+								local bufs = {}
+								for _, win in ipairs(api.nvim_list_wins()) do
+									bufs[api.nvim_win_get_buf(win)] = true
+								end
+								return vim.tbl_keys(bufs)
+							end,
+						},
+					},
+				}, { { name = "path", keyword_length = 3, max_item_count = 3 } }),
+			})
+		end,
+	},
+}
