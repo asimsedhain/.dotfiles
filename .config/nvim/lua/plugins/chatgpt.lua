@@ -7,7 +7,7 @@ return {
 		"jackMort/ChatGPT.nvim",
 		lazy = true,
 		cmd = { "ChatGPT", "ChatGPTActAs", "ChatGPTEditWithInstructions", "ChatGPTRun", "ChatGPTCompleteCode" },
-		dependencies = { "muniftanjim/nui.nvim" },
+		dependencies = { "muniftanjim/nui.nvim", "nvim-lua/plenary.nvim" },
 		config = function()
 			-- ChatGPT
 			require("chatgpt").setup({
