@@ -68,6 +68,14 @@ return {
 					-- Instead of true it can also be a list of languages
 					additional_vim_regex_highlighting = false,
 				},
+				incremental_selection = {
+					enable = true,
+					keymaps = {
+						init_selection = "gn", -- set to `false` to disable one of the mappings
+						node_incremental = "gn",
+						node_decremental = "gN",
+					},
+				},
 				modules = {},
 			})
 		end,
