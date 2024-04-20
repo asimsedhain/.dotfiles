@@ -28,7 +28,7 @@ return {
 	},
 
 	-- auto commenter
-	{ "scrooloose/nerdcommenter", lazy = true, keys = { '<Plug>NERDCommenterToggle' } },
+	{ "scrooloose/nerdcommenter", lazy = true, keys = { '<Plug>NERDCommenterToggle', mode = { 'n', 'v', 'i' } } },
 
 	-- UI to interact with git
 	{ "tpope/vim-fugitive",       lazy = true, cmd = "Git" },
