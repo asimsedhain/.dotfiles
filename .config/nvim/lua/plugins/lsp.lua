@@ -1,5 +1,6 @@
 local api = vim.api
 local keys = require("utils").keys
+local map = require("utils").map
 local removeElement = require("utils").removeElement
 
 -- adding autocmd for yamlfmt since it does not have a lsp server
@@ -94,15 +95,16 @@ local on_attach = function(client, bufnr)
 
 	-- Mappings.
 	-- See `:help vim.lsp.*` for documentation on any of the below functions
-	local bufopts = { noremap = true, silent = true, buffer = bufnr }
-	vim.keymap.set("n", "<space>d", vim.diagnostic.open_float, bufopts)
-	vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
-	vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
-	vim.keymap.set("n", "gy", vim.lsp.buf.type_definition, bufopts)
-	vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
-	vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
-	vim.keymap.set("n", "<F2>", vim.lsp.buf.rename, bufopts)
-	vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
+	--local bufopts = { noremap = true, silent = true, buffer = bufnr }
+	map("n", "<Space>d", vim.diagnostic.open_float,
+		{ buffer = bufnr, desc = "<Space>-d to open diagnostic floating window" })
+	map("n", "gD", vim.lsp.buf.declaration, { buffer = bufnr, desc = "gD: [g]o to [D]eclaration" })
+	map("n", "gd", vim.lsp.buf.definition, { buffer = bufnr, desc = "gd: [g]o to [d]efinition" })
+	map("n", "gy", vim.lsp.buf.type_definition, { buffer = bufnr, desc = "gy: [g]o to t[y]pe definition" })
+	map("n", "gi", vim.lsp.buf.implementation, { buffer = bufnr, desc = "gi: [g]o to [i]mplementation" })
+	map("n", "gr", vim.lsp.buf.references, { buffer = bufnr, desc = "gr: [g]o to [r]eferences" })
+	map("n", "<F2>", vim.lsp.buf.rename, { buffer = bufnr, desc = "<F2> LSP rename" })
+	map("n", "K", vim.lsp.buf.hover, { buffer = bufnr, desc = "K: show buf hover information" })
 
 	-- user command for formating and code actions
 	-- formates with null-ls first and then with other LSP
