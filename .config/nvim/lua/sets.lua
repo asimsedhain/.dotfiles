@@ -7,7 +7,7 @@ global_options.backup = false
 global_options.writebackup = false
 
 -- command line height
-global_options.cmdheight = 3
+global_options.cmdheight = 1
 
 --  Having longer updatetime (default is 4000 ms = 4 s leads to noticeable) delays and poor user experience.
 --global_options.updatetime = 50
