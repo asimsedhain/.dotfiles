@@ -9,6 +9,12 @@ global_options.writebackup = false
 -- command line height
 global_options.cmdheight = 1
 
+-- Set listchars
+global_options.showbreak = "↪"
+global_options.listchars="tab:. ,eol:↩,nbsp:␣,trail:·"
+global_options.list = true
+
+
 --  Having longer updatetime (default is 4000 ms = 4 s leads to noticeable) delays and poor user experience.
 --global_options.updatetime = 50
 
