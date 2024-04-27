@@ -42,4 +42,15 @@ return {
 		end,
 	},
 	{ "catppuccin/nvim", lazy = true },
+	{
+		'ribru17/bamboo.nvim',
+		lazy = true,
+		config = function()
+			require('bamboo').setup {
+				dim_inactive = true
+				-- optional configuration here
+			}
+			require('bamboo').load()
+		end,
+	},
 }
