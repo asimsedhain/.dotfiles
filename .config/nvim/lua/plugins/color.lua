@@ -9,6 +9,7 @@ return {
 		config = function()
 			-- kanagawa does not highlight borders properly
 			require("kanagawa").setup({
+				dimInactive = true,
 				overrides = function(colors)
 					local theme = colors.theme
 					return {
@@ -31,6 +32,7 @@ return {
 		config = function()
 			-- rose-pine is a pain and does not come with highlight_groups for git
 			require("rose-pine").setup({
+				dim_inactive_windows = true,
 				highlight_groups = {
 					DiffAdded = { fg = "pine" },
 					DiffRemoved = { fg = "love" },
@@ -41,7 +43,15 @@ return {
 			})
 		end,
 	},
-	{ "catppuccin/nvim", lazy = true },
+	{
+		"catppuccin/nvim",
+		lazy = true,
+		im_inactive = {
+			enabled = true, -- dims the background color of inactive window
+			shade = "dark",
+			percentage = 0.15, -- percentage of the shade to apply to the inactive window
+		}
+	},
 	{
 		'ribru17/bamboo.nvim',
 		lazy = true,
