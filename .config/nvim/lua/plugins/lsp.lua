@@ -34,6 +34,8 @@ local mason_settings = {
 
 -- LSP servers and settings
 local lsp_servers = {
+	bashls = {},
+	terraformls = {},
 	pyright = {},
 	ruff_lsp = {},
 	gopls = {},
