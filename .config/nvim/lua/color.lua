@@ -7,9 +7,9 @@ g.gruvbox_contrast_dark = "hard"
 
 local dark_mode = false
 
-local dark_mode_theme = "bamboo"
+local dark_mode_theme = "bamboo-multiplex"
 
-local light_mode_theme = "bamboo-light"
+local light_mode_theme = "github_light_tritanopia"
 
 function ToggleTheme()
 	if dark_mode then
