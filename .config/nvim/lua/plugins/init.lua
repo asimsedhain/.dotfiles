@@ -33,6 +33,38 @@ return {
 	-- UI to interact with git
 	{ "tpope/vim-fugitive",       lazy = true, cmd = "Git" },
 
+	-- Better netrw
+	{
+		'stevearc/oil.nvim',
+		opts = {
+			view_options = {
+				show_hidden = true
+			},
+			keymaps = {
+				["-"] = false,
+				["_"] = false,
+				["`"] = false,
+				["~"] = false,
+			}
+		},
+		config = function()
+			require("oil").setup(
+				{
+
+					view_options = {
+						show_hidden = true
+					},
+					keymaps = {
+						["-"] = false,
+						["_"] = false,
+						["`"] = false,
+						["~"] = false,
+					}
+				}
+			)
+		end,
+	},
+
 	-- better status line
 	{
 		"nvim-lualine/lualine.nvim",
