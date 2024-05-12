@@ -133,6 +133,11 @@ runCpp(){
 	g++ -std=c++17 -lfmt "$1" -o ./tempCpp && ./tempCpp && rm ./tempCpp;
 }
 
+# Running simple rust scripts
+runRust(){
+	rustc --edition=2021 "$1" -o ./tempRust && ./tempRust && rm ./tempRust;
+}
+
 
 # Common aliases
 alias ls="eza -lh"
