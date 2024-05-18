@@ -49,12 +49,7 @@ return {
 					view_options = {
 						show_hidden = true
 					},
-					keymaps = {
-						["-"] = false,
-						["_"] = false,
-						["`"] = false,
-						["~"] = false,
-					}
+					use_default_keymaps = false,
 				}
 			)
 		end,
