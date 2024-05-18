@@ -1,6 +1,10 @@
 -- return exports the whole module
 -- lazy will stitch all the everything together
 -- https://github.com/folke/lazy.nvim?tab=readme-ov-file#-structuring-your-plugins
+--
+--model = "gpt-3.5-turbo",
+--model = "gpt-4-turbo-preview",
+model = 'gpt-4o'
 return {
 	-- ChatGPT
 	{
@@ -30,7 +34,7 @@ return {
 				},
 				openai_params = {
 					--model = "gpt-3.5-turbo",
-					model = "gpt-4-turbo-preview",
+					model = model,
 					frequency_penalty = 0,
 					presence_penalty = 0,
 					max_tokens = 600,
@@ -39,8 +43,7 @@ return {
 					n = 1,
 				},
 				openai_edit_params = {
-					--model = "gpt-3.5-turbo",
-					model = "gpt-4-turbo-preview",
+					model = model,
 					frequency_penalty = 0,
 					presence_penalty = 0,
 					temperature = 0,
