@@ -140,8 +140,14 @@ runRust(){
 
 
 # Common aliases
-alias ls="eza -lh"
-alias la="eza -lha"
+
+# Only define eza alias if eza exists
+if which eza &> /dev/null
+then
+	alias ls="eza -lh"
+	alias la="eza -lha"
+fi
+
 alias ta="tmux a"
 alias tls="tmux ls"
 alias tms="sh ~/.config/tmux-sessionizer"
@@ -166,9 +172,14 @@ alias dockVolumeClean='docker volume rm $(docker volume ls -q)'
 alias dockMasterPrune='docker image rm $(docker image ls -q)'
 
 #kubernetes aliases
-source <(kubectl completion zsh)
-alias kctl=kubectl
-compdef __start_kubectl kctl
+#
+# Only define kubectl alias if kubectl exists
+if which kubectl &> /dev/null
+then
+	source <(kubectl completion zsh)
+	alias kctl=kubectl
+	compdef __start_kubectl kctl
+fi
 
 #seting the editor
 export EDITOR="nvim"
