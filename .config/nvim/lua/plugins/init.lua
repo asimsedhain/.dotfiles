@@ -50,6 +50,9 @@ return {
 						show_hidden = true
 					},
 					use_default_keymaps = false,
+					keymaps = {
+						["<CR>"] = "actions.select",
+					}
 				}
 			)
 		end,
