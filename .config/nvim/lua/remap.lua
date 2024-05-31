@@ -74,8 +74,8 @@ map("i", "!", "!<c-g>u")
 map("i", "?", "?<c-g>u")
 
 -- Fugitive remap
-map("n", "<SPACE>gl", ":Git! log --decorate --oneline --graph --all<CR>", { desc = "<Space>gl to show git log" })
-map("n", "<SPACE>gs", ":G<CR>", { desc = "<Space>gs to show git status" })
+map("n", "<SPACE>gl", ":Git log --decorate --oneline --graph --all<CR>", { desc = "<Space>gl to show git log" })
+map("n", "<SPACE>gs", ":Git<CR>", { desc = "<Space>gs to show git status" })
 
 -- Telescope
 -- Ctrl-p for searching for files
@@ -93,3 +93,6 @@ map("n", "<SPACE>h", "<cmd>lua require('telescope.builtin').help_tags()<cr>", {
 	desc =
 	"<Space>-h for seaching through help"
 })
+
+-- Oil
+map("n", "<C-\\>", "<cmd>Oil<cr>", { desc = "<Ctrl-\\ for openning the current directory in Oil"})
