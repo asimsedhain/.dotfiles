@@ -45,59 +45,62 @@ local lsp_servers = {
 	eslint = {},
 	marksman = {},
 	rust_analyzer = {
-		["rust-analyzer"] = {
-			-- enable clippy on save
-			check = {
-				command = "clippy",
+		settings = {
+			["rust-analyzer"] = {
+				-- enable clippy on save
+				check = {
+					command = "clippy",
+				},
+				diagnostics = {
+					enable = true,
+				},
 			},
-			diagnostics = {
-				enable = true,
-			},
-		},
+		}
 	},
 	svelte = {},
 	cssls = {
-		css = {
-			lint = {
-				unknownAtRules = "ignore",
+		settings = {
+			css = {
+				lint = {
+					unknownAtRules = "ignore",
+				},
 			},
-		},
+		}
 	},
 	tailwindcss = {},
 	clangd = {},
 	lua_ls = {
-		Lua = {
-			runtime = {
-				-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-				version = "LuaJIT",
-				-- Setup your lua path
-				path = runtime_path,
-			},
-			diagnostics = {
-				-- Get the language server to recognize the `vim` global
-				globals = { "vim", "runtime_path" },
-			},
-			workspace = {
-				-- Make the server aware of Neovim runtime files
-				library = api.nvim_get_runtime_file("", true),
-			},
-			-- Do not send telemetry data containing a randomized but unique identifier
-			telemetry = {
-				enable = false,
+		settings = {
+			Lua = {
+				runtime = {
+					-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+					version = "LuaJIT",
+					-- Setup your lua path
+					path = runtime_path,
+				},
+				diagnostics = {
+					-- Get the language server to recognize the `vim` global
+					globals = { "vim", "runtime_path" },
+				},
+				workspace = {
+					-- Make the server aware of Neovim runtime files
+					library = api.nvim_get_runtime_file("", true),
+				},
+				-- Do not send telemetry data containing a randomized but unique identifier
+				telemetry = {
+					enable = false,
+				},
 			},
 		},
-	},
+
+	}
 }
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
-	-- Enable completion triggered by <c-x><c-o>
-	--vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
 	-- Mappings.
 	-- See `:help vim.lsp.*` for documentation on any of the below functions
-	--local bufopts = { noremap = true, silent = true, buffer = bufnr }
 	map("n", "<Space>d", vim.diagnostic.open_float,
 		{ buffer = bufnr, desc = "<Space>-d to open diagnostic floating window" })
 	map("n", "gD", vim.lsp.buf.declaration, { buffer = bufnr, desc = "gD: [g]o to [D]eclaration" })
@@ -193,8 +196,14 @@ return {
 			local capabilities =
 				require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
-			for lsp_server, settings in pairs(lsp_servers) do
-				config[lsp_server].setup({ on_attach = on_attach, capabilities = capabilities, settings = settings })
+			for lsp_server, cfg in pairs(lsp_servers) do
+				config[lsp_server].setup({
+					on_attach = on_attach,
+					capabilities = capabilities,
+					settings = cfg
+						.settings,
+					cmd = cfg.cmd
+				})
 			end
 		end,
 	},
