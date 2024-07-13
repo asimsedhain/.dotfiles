@@ -1,9 +1,5 @@
-local g = vim.g
 local has = vim.fn.has
 local system = vim.fn.system
-
-g.gruvbox_contrast_light = "hard"
-g.gruvbox_contrast_dark = "hard"
 
 local dark_mode = false
 
@@ -44,3 +40,4 @@ function SyncThemeWithSystem()
 end
 
 SyncThemeWithSystem()
+
