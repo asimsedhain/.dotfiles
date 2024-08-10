@@ -74,8 +74,13 @@ map("i", "!", "!<c-g>u")
 map("i", "?", "?<c-g>u")
 
 -- Fugitive remap
-map("n", "<SPACE>gl", ":Git log --decorate --oneline --graph --all<CR>", { desc = "<Space>gl to show git log" })
+map("n", "<SPACE>gl", ":Git log --decorate --oneline --graph --all<CR>",
+	{ desc = "<Space>gl to show git log" })
 map("n", "<SPACE>gs", ":Git<CR>", { desc = "<Space>gs to show git status" })
+vim.cmd("cnorea Gf Git fetch")
+vim.cmd("cnorea Gpull Git pull")
+vim.cmd("cnorea Gsw Git switch")
+vim.cmd("cnorea Gb Git branch")
 
 -- Telescope
 -- Ctrl-p for searching for files
@@ -95,4 +100,4 @@ map("n", "<SPACE>h", "<cmd>lua require('telescope.builtin').help_tags()<cr>", {
 })
 
 -- Oil
-map("n", "<C-\\>", "<cmd>Oil<cr>", { desc = "<Ctrl-\\ for openning the current directory in Oil"})
+map("n", "<C-\\>", "<cmd>Oil<cr>", { desc = "<Ctrl-\\ for openning the current directory in Oil" })

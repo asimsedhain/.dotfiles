@@ -31,7 +31,11 @@ return {
 	{ "scrooloose/nerdcommenter", lazy = true, event = 'VeryLazy' },
 
 	-- UI to interact with git
-	{ "tpope/vim-fugitive",       lazy = true, cmd = "Git" },
+	{
+		"tpope/vim-fugitive",
+		lazy = true,
+		cmd = "Git"
+	},
 
 	-- Better netrw
 	{
