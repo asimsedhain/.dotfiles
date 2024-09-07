@@ -3,9 +3,9 @@ local system = vim.fn.system
 
 local dark_mode = false
 
-local dark_mode_theme = "github_dark_tritanopia"
+local dark_mode_theme = "catppuccin-mocha"
 
-local light_mode_theme = "github_light_tritanopia"
+local light_mode_theme = "rose-pine-dawn"
 
 function ToggleTheme()
 	if dark_mode then
