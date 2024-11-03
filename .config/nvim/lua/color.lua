@@ -5,7 +5,7 @@ local dark_mode = false
 
 local dark_mode_theme = "catppuccin-mocha"
 
-local light_mode_theme = "rose-pine-dawn"
+local light_mode_theme = "bamboo-light"
 
 function ToggleTheme()
 	if dark_mode then
