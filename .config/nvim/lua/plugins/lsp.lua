@@ -1,7 +1,7 @@
 local api = vim.api
 local keys = require("utils").keys
 local map = require("utils").map
-local removeElement = require("utils").removeElement
+local remove_element = require("utils").remove_element
 
 -- adding autocmd for yamlfmt since it does not have a lsp server
 -- but null-ls supports formatting yaml file
@@ -162,7 +162,7 @@ return {
 		"williamboman/mason-lspconfig.nvim",
 		dependencies = { "williamboman/mason.nvim" },
 		config = function()
-			local lsp_servers_to_install = removeElement(keys(lsp_servers), "rust_analyzer") -- use the local rust_analyzer installed by rustup installed of allowing mason to install it.
+			local lsp_servers_to_install = remove_element(keys(lsp_servers), "rust_analyzer") -- use the local rust_analyzer installed by rustup installed of allowing mason to install it.
 			require("mason-lspconfig").setup({ ensure_installed = lsp_servers_to_install })
 		end,
 	},

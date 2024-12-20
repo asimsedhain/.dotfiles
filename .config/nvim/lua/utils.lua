@@ -19,7 +19,7 @@ function M.keys(table)
 end
 
 -- Returns a copy of the array with the element removed
-function M.removeElement(arr, element)
+function M.remove_element(arr, element)
 	local copy = {}
 	for _, value in ipairs(arr) do
 		if value ~= element then
