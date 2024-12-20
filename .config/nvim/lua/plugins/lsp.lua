@@ -9,7 +9,7 @@ api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 	pattern = "*.{yml,yaml}",
 	callback = function(args)
 		api.nvim_buf_create_user_command(args.buf, "Format", function()
-			vim.lsp.buf.format(nil, nil, { "null-ls" })
+			vim.lsp.buf.format({ async = false, name = 'null-ls' })
 		end, {})
 	end,
 })
@@ -114,11 +114,11 @@ local on_attach = function(client, bufnr)
 	-- user command for formating and code actions
 	-- formates with null-ls first and then with other LSP
 	api.nvim_buf_create_user_command(bufnr, "Format", function()
-		vim.lsp.buf.format(nil, nil, { "null-ls" })
+		vim.lsp.buf.format({ async = false, name = 'null-ls' })
 	end, {})
 
 	api.nvim_buf_create_user_command(bufnr, "F", function()
-		vim.lsp.buf.format(nil, nil, { "null-ls" })
+		vim.lsp.buf.format({ async = false, name = 'null-ls' })
 	end, {})
 
 	api.nvim_buf_create_user_command(bufnr, "Enext", vim.diagnostic.goto_next, {})
