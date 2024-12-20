@@ -1,56 +1,67 @@
--- return exports the whole module
 -- lazy will stitch all the everything together
 -- https://github.com/folke/lazy.nvim?tab=readme-ov-file#-structuring-your-plugins
---
---model = "gpt-3.5-turbo",
---model = "gpt-4-turbo-preview",
-local model = 'gpt-4o'
 return {
-	-- ChatGPT
 	{
-		"jackMort/ChatGPT.nvim",
-		lazy = true,
-		cmd = { "ChatGPT", "ChatGPTActAs", "ChatGPTEditWithInstructions", "ChatGPTRun", "ChatGPTCompleteCode" },
-		dependencies = { "muniftanjim/nui.nvim", "nvim-lua/plenary.nvim" },
+		"robitx/gp.nvim",
 		config = function()
-			-- ChatGPT
-			require("chatgpt").setup({
-				api_key_cmd = "security find-generic-password -s openai -w",
-				chat = {
-					welcome_message = "Start Asking....",
-					loading_text = "Loading, please wait ...",
-					question_sign = "🙋", -- 🙂
-					answer_sign = "🤖", -- 🤖
-					border_left_sign = "|",
-					border_right_sign = "|",
-					sessions_window = {
-						active_sign = "🟩 ",
-						inactive_sign = " ⬜️",
-						current_line_sign = "►",
-					},
+			require("gp").setup({
+				openai_api_key = { "security", "find-generic-password", "-s", "openai", "-w" },
+				whisper = {
+					disable = true
 				},
-				popup_input = {
-					prompt = " 🟢 ",
+				image = {
+					disable = true
 				},
-				openai_params = {
-					--model = "gpt-3.5-turbo",
-					model = model,
-					frequency_penalty = 0,
-					presence_penalty = 0,
-					max_tokens = 600,
-					temperature = 0,
-					top_p = 1,
-					n = 1,
-				},
-				openai_edit_params = {
-					model = model,
-					frequency_penalty = 0,
-					presence_penalty = 0,
-					temperature = 0,
-					top_p = 1,
-					n = 1,
-				},
+				cmd_prefix = "Gp",
+				hooks = {
+					UnitTests = function(gp, params)
+						local template = "I have the following code from {{filename}}:\n\n"
+							.. "```{{filetype}}\n{{selection}}\n```\n\n"
+							.. "Respond by writing table driven unit tests for the code above.\n"
+							.. "The goal should be test edge cases rather than the obvious simple case."
+						local agent = gp.get_command_agent()
+						gp.Prompt(params, gp.Target.popup, agent, template)
+					end,
+					Explain = function(gp, params)
+						local template = "I have the following code from {{filename}}:\n\n"
+							.. "```{{filetype}}\n{{selection}}\n```\n\n"
+							.. "Respond by explaining the code above."
+						local agent = gp.get_chat_agent()
+						gp.Prompt(params, gp.Target.popup, agent, template)
+					end,
+					CodeReview = function(gp, params)
+						local template = "I have the following code from {{filename}}:\n\n"
+							.. "```{{filetype}}\n{{selection}}\n```\n\n"
+							.. "Analyze for code smells and suggest improvements."
+							.. "Focus on proper typing (if applicable), and common pitfalls."
+						local agent = gp.get_chat_agent()
+						gp.Prompt(params, gp.Target.popup, agent, template)
+					end,
+					ProofRead = function(gp, params)
+						local template = "I want you act as a proofreader.\n"
+							.. "I will provide you texts and I would like you to review them for any spelling, grammar, or punctuation errors.\n"
+							.. "Once you have finished reviewing the text, respond exclusively with the improved text\n\n"
+							.. "```{{selection}}```"
+						local agent = gp.get_chat_agent()
+						gp.Prompt(params, gp.Target.rewrite, agent, template)
+					end,
+					DocString = function(gp, params)
+						local template = "I have the following code from {{filename}}:\n\n"
+							.. "```{{filetype}}\n{{selection}}\n```\n\n"
+							.. "Respond by writing docstring for the code."
+							.. "Focus on following best practice for the given language\n"
+							.. "Pay attention to parameters, return types (if applicable)\n"
+							.. "and any errors that might be raised or returned, depending on the language\n\n"
+							.. "Respond exclusively with the docstring and the original snippet"
+						local agent = gp.get_chat_agent()
+						gp.Prompt(params, gp.Target.rewrite, agent, template)
+					end,
+				}
 			})
+			local cmd_to_delete = { "GpAppend", "GpPrepend", "GpEnew", "GpNew", "GpVnew", "GpTabnew", "GpPopup", "GpAgent" }
+			for _, cmd in ipairs(cmd_to_delete) do
+				vim.api.nvim_del_user_command(cmd)
+			end
 		end,
-	},
+	}
 }
