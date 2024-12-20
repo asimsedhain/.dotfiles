@@ -7,15 +7,22 @@ local dark_mode_theme = "catppuccin-mocha"
 
 local light_mode_theme = "bamboo-light"
 
-function ToggleTheme()
-	if dark_mode then
-		dark_mode = false
-		vim.cmd("colorscheme " .. light_mode_theme)
-	else
-		dark_mode = true
+---@param is_dark_mode boolean
+local function setTheme(is_dark_mode)
+	if is_dark_mode then
 		vim.cmd("colorscheme " .. dark_mode_theme)
+		vim.cmd("set bg=dark")
+		dark_mode = true
+	else
+		dark_mode = false
+		vim.cmd("set bg=light")
+		vim.cmd("colorscheme " .. light_mode_theme)
 	end
 	vim.api.nvim_set_hl(0, "WinSeparator", { bg = "None" })
+end
+
+function ToggleTheme()
+	setTheme(not dark_mode)
 end
 
 -- Creating a user command for toggling theme
@@ -30,14 +37,10 @@ function SyncThemeWithSystem()
 	local sys_theme = system("defaults read -g AppleInterfaceStyle")
 
 	if string.find(sys_theme, "Dark") then
-		vim.cmd("colorscheme " .. dark_mode_theme)
-		dark_mode = true
+		setTheme(true)
 	else
-		dark_mode = false
-		vim.cmd("colorscheme " .. light_mode_theme)
+		setTheme(false)
 	end
-	vim.api.nvim_set_hl(0, "WinSeparator", { bg = "None" })
 end
 
 SyncThemeWithSystem()
-
