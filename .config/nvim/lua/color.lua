@@ -5,7 +5,7 @@ local dark_mode = false
 
 local dark_mode_theme = "catppuccin-mocha"
 
-local light_mode_theme = "bamboo-light"
+local light_mode_theme = "dawnfox"
 
 ---@param is_dark_mode boolean
 local function set_theme(is_dark_mode)
