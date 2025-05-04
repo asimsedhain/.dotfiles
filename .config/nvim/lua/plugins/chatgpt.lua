@@ -1,5 +1,6 @@
 -- lazy will stitch all the everything together
 -- https://github.com/folke/lazy.nvim?tab=readme-ov-file#-structuring-your-plugins
+local cmd_prefix = "Cp"
 return {
 	{
 		"robitx/gp.nvim",
@@ -12,7 +13,7 @@ return {
 				image = {
 					disable = true
 				},
-				cmd_prefix = "Gp",
+				cmd_prefix = cmd_prefix,
 				hooks = {
 					UnitTests = function(gp, params)
 						local template = "I have the following code from {{filename}}:\n\n"
@@ -58,9 +59,9 @@ return {
 					end,
 				}
 			})
-			local cmd_to_delete = { "GpAppend", "GpPrepend", "GpEnew", "GpNew", "GpVnew", "GpTabnew", "GpPopup", "GpAgent" }
+			local cmd_to_delete = { "Append", "Prepend", "Enew", "New", "Vnew", "Tabnew", "Popup", "Agent" }
 			for _, cmd in ipairs(cmd_to_delete) do
-				vim.api.nvim_del_user_command(cmd)
+				vim.api.nvim_del_user_command(cmd_prefix .. cmd)
 			end
 		end,
 	}
