@@ -1,6 +1,7 @@
 -- lazy will stitch all the everything together
 -- https://github.com/folke/lazy.nvim?tab=readme-ov-file#-structuring-your-plugins
 local cmd_prefix = "Cp"
+local map = require("utils").map
 return {
 	{
 		"robitx/gp.nvim",
@@ -59,10 +60,16 @@ return {
 					end,
 				}
 			})
+
+			--Removing unused commands
 			local cmd_to_delete = { "Append", "Prepend", "Enew", "New", "Vnew", "Tabnew", "Popup", "Agent" }
 			for _, cmd in ipairs(cmd_to_delete) do
 				vim.api.nvim_del_user_command(cmd_prefix .. cmd)
 			end
+
+			-- add remaps
+			map("n", "<C-q>", ":" .. cmd_prefix .. "ChatToggle<CR>", { desc = "Toggle ChatGPT chat" })
+			map("n", "<C-w>", ":" .. cmd_prefix .. "ChatRespond<CR>", { desc = "Request ChatGPT to respond" })
 		end,
 	}
 }
