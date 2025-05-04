@@ -3,14 +3,21 @@ local keys = require("utils").keys
 local map = require("utils").map
 local remove_element = require("utils").remove_element
 
+--- @param lsp_name string
+--- @return function
+local format_function_fac = function(lsp_name)
+	local func = function(_client)
+		vim.lsp.buf.format({ async = false, name = lsp_name })
+	end
+	return func
+end
+
 -- adding autocmd for yamlfmt since it does not have a lsp server
 -- but null-ls supports formatting yaml file
 api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 	pattern = "*.{yml,yaml}",
 	callback = function(args)
-		api.nvim_buf_create_user_command(args.buf, "Format", function()
-			vim.lsp.buf.format({ async = false, name = 'null-ls' })
-		end, {})
+		api.nvim_buf_create_user_command(args.buf, "Format", format_function_fac("null-ls"), {})
 	end,
 })
 
@@ -90,6 +97,9 @@ local lsp_servers = {
 				telemetry = {
 					enable = false,
 				},
+				format = {
+					enable = true,
+				}
 			},
 		},
 
@@ -111,15 +121,12 @@ local on_attach = function(client, bufnr)
 	map("n", "<F2>", vim.lsp.buf.rename, { buffer = bufnr, desc = "<F2> LSP rename" })
 	map("n", "K", vim.lsp.buf.hover, { buffer = bufnr, desc = "K: show buf hover information" })
 
-	-- user command for formating and code actions
-	-- formates with null-ls first and then with other LSP
-	api.nvim_buf_create_user_command(bufnr, "Format", function()
-		vim.lsp.buf.format({ async = false, name = 'null-ls' })
-	end, {})
+	if client.supports_method("textDocument/formatting", { bufnr = bufnr }) then
+		api.nvim_buf_create_user_command(bufnr, "Format", format_function_fac(client.name), {})
+		api.nvim_buf_create_user_command(bufnr, "F", format_function_fac(client.name), {})
+	end
 
-	api.nvim_buf_create_user_command(bufnr, "F", function()
-		vim.lsp.buf.format({ async = false, name = 'null-ls' })
-	end, {})
+
 
 	api.nvim_buf_create_user_command(bufnr, "Enext", vim.diagnostic.goto_next, {})
 	api.nvim_buf_create_user_command(bufnr, "Eprev", vim.diagnostic.goto_prev, {})
@@ -172,7 +179,6 @@ return {
 			local null_ls = require("null-ls")
 			null_ls.setup({
 				sources = {
-					null_ls.builtins.formatting.black,
 					null_ls.builtins.formatting.clang_format,
 					null_ls.builtins.formatting.prettier_standard,
 					null_ls.builtins.formatting.yamlfmt,
