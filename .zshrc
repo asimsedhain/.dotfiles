@@ -25,7 +25,12 @@ HYPHEN_INSENSITIVE="true"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git vi-mode)
+
+# vi-mode plugin customization
+VI_MODE_RESET_PROMPT_ON_MODE_CHANGE=true
+VI_MODE_SET_CURSOR=true
+VI_MODE_CURSOR_VISUAL=2
 
 source $ZSH/oh-my-zsh.sh
 
@@ -131,3 +136,6 @@ export VISUAL="nvim"
 
 
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+
+# enable vim mode
+#bindkey -v
