@@ -188,19 +188,14 @@ return {
 	},
 	-- LSP completion
 	{
-		"hrsh7th/cmp-nvim-lsp",
-		lazy = true,
-		event = "InsertEnter",
-	},
-
-	{
 		"neovim/nvim-lspconfig",
 		event = "VeryLazy",
-		dependencies = { "hrsh7th/cmp-nvim-lsp" },
+		dependencies = { "saghen/blink.cmp" },
 		config = function()
 			local config = require("lspconfig")
-			local capabilities =
-				require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
+
+			--local capabilities =
+			local capabilities = require('blink.cmp').get_lsp_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 			for lsp_server, cfg in pairs(lsp_servers) do
 				config[lsp_server].setup({
@@ -213,61 +208,37 @@ return {
 			end
 		end,
 	},
-	{ "hrsh7th/cmp-nvim-lsp-signature-help", lazy = true, event = "InsertEnter" },
-	{ "hrsh7th/cmp-buffer",                  lazy = true, event = "InsertEnter" },
-	{ "hrsh7th/cmp-path",                    lazy = true, event = "InsertEnter" },
 	{
-		"hrsh7th/nvim-cmp",
+		'saghen/blink.cmp',
+		-- use a release tag to download pre-built binaries
+		version = '1.*',
 		lazy = true,
-		dependencies = {
-			"hrsh7th/cmp-nvim-lsp",
-			"hrsh7th/cmp-buffer",
-			"hrsh7th/cmp-path",
-		},
 		event = "InsertEnter",
-		config = function()
-			-- nvim-cmp completion engine
-			vim.opt.completeopt = { "menu", "menuone", "noselect" }
-			local cmp = require("cmp")
-			cmp.setup({
-				preselect = cmp.PreselectMode.None,
-				window = {
-					completion = cmp.config.window.bordered(),
-				},
-				mapping = {
-					["<C-n>"] = cmp.mapping(function()
-						if cmp.visible() then
-							cmp.select_next_item()
-						else
-							cmp.complete()
-						end
-					end, { "i" }),
-					["<C-p>"] = cmp.mapping(function()
-						if cmp.visible() then
-							cmp.select_prev_item()
-						else
-							cmp.complete()
-						end
-					end, { "i" }),
-				},
-				sources = cmp.config.sources({
-					{ name = "nvim_lsp", max_item_count = 6 },
-				}, { { name = "nvim_lsp_signature_help", max_item_count = 1 } }, {
-					{
-						name = "buffer",
-						max_item_count = 3,
-						option = {
-							get_bufnrs = function()
-								local bufs = {}
-								for _, win in ipairs(api.nvim_list_wins()) do
-									bufs[api.nvim_win_get_buf(win)] = true
-								end
-								return vim.tbl_keys(bufs)
-							end,
-						},
-					},
-				}, { { name = "path", keyword_length = 3, max_item_count = 3 } }),
-			})
-		end,
-	},
+		opts = {
+			keymap = {
+				preset = 'none',
+				['<Up>'] = { 'select_prev', 'fallback' },
+				['<Down>'] = { 'select_next', 'fallback' },
+				['<C-n>'] = { 'select_next' },
+				['<C-p>'] = { 'select_prev' },
+			},
+
+			completion = {
+				list = { selection = { preselect = false, auto_insert = true } },
+				menu = {
+					draw = {
+						padding = 1,
+						gap = 1,
+						columns = { { "label", "label_description" }, { "kind" } }
+					}
+				}
+			},
+
+			sources = {
+				default = { 'lsp', 'path', 'buffer' },
+			},
+			fuzzy = { implementation = "prefer_rust_with_warning" }
+		},
+		opts_extend = { "sources.default" }
+	}
 }
