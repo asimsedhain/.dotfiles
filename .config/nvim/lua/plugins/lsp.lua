@@ -14,13 +14,12 @@ end
 
 -- adding autocmd for yamlfmt since it does not have a lsp server
 -- but null-ls supports formatting yaml file
-api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-	pattern = "*.{yml,yaml}",
-	callback = function(args)
-		api.nvim_buf_create_user_command(args.buf, "Format", format_function_fac("null-ls"), {})
-	end,
-})
-
+--api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+--pattern = "*.{yml,yaml}",
+--callback = function(args)
+--api.nvim_buf_create_user_command(args.buf, "Format", format_function_fac("null-ls"), {})
+--end,
+--})
 -- Set diagnostics to show source
 vim.diagnostic.config({
 	virtual_text = {
@@ -87,11 +86,14 @@ local lsp_servers = {
 				},
 				diagnostics = {
 					-- Get the language server to recognize the `vim` global
-					globals = { "vim", "runtime_path" },
+					globals = { "vim" },
 				},
 				workspace = {
 					-- Make the server aware of Neovim runtime files
-					library = api.nvim_get_runtime_file("", true),
+					checkThirdParty = false,
+					library = {
+						vim.env.VIMRUNTIME,
+					}
 				},
 				-- Do not send telemetry data containing a randomized but unique identifier
 				telemetry = {
@@ -121,7 +123,7 @@ local on_attach = function(client, bufnr)
 	map("n", "<F2>", vim.lsp.buf.rename, { buffer = bufnr, desc = "<F2> LSP rename" })
 	map("n", "K", vim.lsp.buf.hover, { buffer = bufnr, desc = "K: show buf hover information" })
 
-	if client.supports_method("textDocument/formatting", { bufnr = bufnr }) then
+	if client:supports_method("textDocument/formatting", { bufnr = bufnr }) then
 		api.nvim_buf_create_user_command(bufnr, "Format", format_function_fac(client.name), {})
 		api.nvim_buf_create_user_command(bufnr, "F", format_function_fac(client.name), {})
 	end
@@ -173,38 +175,30 @@ return {
 			require("mason-lspconfig").setup({ ensure_installed = lsp_servers_to_install })
 		end,
 	},
-	{
-		"jose-elias-alvarez/null-ls.nvim",
-		config = function()
-			local null_ls = require("null-ls")
-			null_ls.setup({
-				sources = {
-					null_ls.builtins.formatting.clang_format,
-					null_ls.builtins.formatting.prettier_standard,
-					null_ls.builtins.formatting.yamlfmt,
-				},
-			})
-		end,
-	},
 	-- LSP completion
 	{
 		"neovim/nvim-lspconfig",
 		event = "VeryLazy",
 		dependencies = { "saghen/blink.cmp" },
 		config = function()
-			local config = require("lspconfig")
-
 			--local capabilities =
 			local capabilities = require('blink.cmp').get_lsp_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 			for lsp_server, cfg in pairs(lsp_servers) do
-				config[lsp_server].setup({
-					on_attach = on_attach,
-					capabilities = capabilities,
-					settings = cfg
-						.settings,
-					cmd = cfg.cmd
-				})
+				if next(cfg) ~= nil then
+					local default_on_attach = (vim.lsp.config[lsp_server] or {}).on_attach
+					vim.lsp.config(lsp_server, {
+						on_attach = {
+							default_on_attach,
+							on_attach
+						},
+						capabilities = capabilities,
+						settings = cfg
+							.settings,
+						cmd = cfg.cmd
+					})
+				end
+				vim.lsp.enable(lsp_server)
 			end
 		end,
 	},
