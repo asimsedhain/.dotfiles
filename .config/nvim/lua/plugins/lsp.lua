@@ -12,14 +12,14 @@ local format_function_fac = function(lsp_name)
 	return func
 end
 
--- adding autocmd for yamlfmt since it does not have a lsp server
--- but null-ls supports formatting yaml file
---api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
---pattern = "*.{yml,yaml}",
---callback = function(args)
---api.nvim_buf_create_user_command(args.buf, "Format", format_function_fac("null-ls"), {})
---end,
---})
+--adding autocmd for yamlfmt since it does not have a lsp server
+--but null-ls supports formatting yaml file
+api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+	pattern = "*.{yml,yaml,cpp}",
+	callback = function(args)
+		api.nvim_buf_create_user_command(args.buf, "Format", format_function_fac("null-ls"), {})
+	end,
+})
 -- Set diagnostics to show source
 vim.diagnostic.config({
 	virtual_text = {
@@ -75,14 +75,13 @@ local lsp_servers = {
 	},
 	tailwindcss = {},
 	clangd = {},
+	null_ls = {},
 	lua_ls = {
 		settings = {
 			Lua = {
 				runtime = {
 					-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
 					version = "LuaJIT",
-					-- Setup your lua path
-					path = runtime_path,
 				},
 				diagnostics = {
 					-- Get the language server to recognize the `vim` global
@@ -171,8 +170,21 @@ return {
 		"williamboman/mason-lspconfig.nvim",
 		dependencies = { "williamboman/mason.nvim" },
 		config = function()
-			local lsp_servers_to_install = remove_element(keys(lsp_servers), "rust_analyzer") -- use the local rust_analyzer installed by rustup installed of allowing mason to install it.
-			require("mason-lspconfig").setup({ ensure_installed = lsp_servers_to_install })
+			local ls_without_rust = remove_element(keys(lsp_servers), "rust_analyzer") -- use the local rust_analyzer installed by rustup installed of allowing mason to install it.
+			local ls_to_install = remove_element(ls_without_rust, "null_ls")  -- use the local rust_analyzer installed by rustup installed of allowing mason to install it.
+			require("mason-lspconfig").setup({ ensure_installed = ls_to_install })
+		end,
+	},
+
+	{
+		"nvimtools/none-ls.nvim",
+		config = function()
+			local null_ls = require("null-ls")
+			null_ls.setup({
+				sources = {
+					null_ls.builtins.formatting.yamlfmt
+				},
+			})
 		end,
 	},
 	-- LSP completion
@@ -189,8 +201,8 @@ return {
 					local default_on_attach = (vim.lsp.config[lsp_server] or {}).on_attach
 					vim.lsp.config(lsp_server, {
 						on_attach = {
-							default_on_attach,
-							on_attach
+							on_attach,
+							default_on_attach
 						},
 						capabilities = capabilities,
 						settings = cfg
