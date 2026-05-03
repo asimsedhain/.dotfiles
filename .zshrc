@@ -48,14 +48,6 @@ source $ZSH/oh-my-zsh.sh
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 
 
-# adding python env if python is defined
-if which python3 &> /dev/null
-then
-	export PATH="$PATH:/usr/local/include"
-	export PATH="$PATH:/Users/ashimsedhain/Library/Python/3.8/bin"
-	export PATH="$PATH:/Users/ashimsedhain/Library/Python/3.8/lib/python/site-packages"
-fi
-
 # NVM node version manager settings
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -79,7 +71,16 @@ export PATH="$PATH:~/.cargo/bin"
 
 # Running simple cpp scripts
 runCpp(){
-	g++ -std=c++17 -lfmt "$1" -o ./tempCpp && ./tempCpp && rm ./tempCpp;
+    g++ -std=c++23 -lfmt "$1" -o ./tempCpp &&
+    ./tempCpp &&
+    rm ./tempCpp
+}
+
+runCppLldb(){
+    g++ -std=c++23 -g -O0 -fno-omit-frame-pointer \
+        -fsanitize=address,undefined -lfmt "$1" -o ./tempCpp &&
+    lldb -o run -o bt ./tempCpp &&
+    rm ./tempCpp
 }
 
 # Running simple rust scripts
@@ -136,6 +137,13 @@ export VISUAL="nvim"
 
 
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+export PATH="/opt/homebrew/bin:$PATH"
 
 # enable vim mode
 #bindkey -v
+
+#OPENAI_API_KEY=$(security find-generic-password -s OpenAI-Codex -w)
+export OPENAI_API_KEY=$(security find-generic-password -s openai -w)
+
+. "$HOME/.local/bin/env"
+source $HOME/.venv/bin/activate
