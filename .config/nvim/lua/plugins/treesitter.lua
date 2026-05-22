@@ -1,3 +1,4 @@
+local map = require("utils").map
 -- return exports the whole module
 -- lazy will stitch all the everything together
 -- https://github.com/folke/lazy.nvim?tab=readme-ov-file#-structuring-your-plugins
@@ -40,6 +41,11 @@ return {
 				"css",
 				"html",
 			})
+			map('n', 'gn', 'van', { remap = true, desc = 'Select parent TS node' })
+			map('x', 'gn', 'an', { remap = true, desc = 'Select parent TS node' })
+
+			map('n', 'gN', 'vin', { remap = true, desc = 'Select child TS node' })
+			map('x', 'gN', 'in', { remap = true, desc = 'Select child TS node' })
 		end,
 	},
 }
