@@ -1,3 +1,6 @@
+local map = require("utils").map
+local has = vim.fn.has
+
 -- return exports the whole module
 -- lazy will stitch all the everything together
 -- https://github.com/folke/lazy.nvim?tab=readme-ov-file#-structuring-your-plugins
@@ -12,6 +15,24 @@ return {
 		dependencies = { "nvim-lua/plenary.nvim" },
 		lazy = true,
 		event = "VeryLazy",
+		config = function()
+			-- Ctrl-p for searching for files
+			map("n", "<C-p>", "<cmd>lua require('telescope.builtin').find_files()<cr>",
+				{ desc = "Ctrl-p for searching for files" })
+			-- <Space>-p for searching for files without ignore hidden files
+			map("n", "<SPACE>p", "<cmd>lua require('telescope.builtin').find_files({hidden= true})<cr>",
+				{ desc = "<Space>-p for searching for files without ignore hidden files" })
+			-- Ctrl-g for live grep
+			map("n", "<C-g>", "<cmd>lua require('telescope.builtin').live_grep()<cr>", { desc = "Ctrl-g for live grep" })
+			-- <Space>-t for all pickers in telescope
+			map("n", "<SPACE>t", "<cmd>lua require('telescope.builtin').builtin()<cr>",
+				{ desc = "<Space>-t for all pickers in telescope" })
+			-- Space-h for seaching through help
+			map("n", "<SPACE>h", "<cmd>lua require('telescope.builtin').help_tags()<cr>", {
+				desc =
+				"<Space>-h for seaching through help"
+			})
+		end
 	},
 
 	-- pairs completer,
@@ -26,15 +47,43 @@ return {
 			})
 		end,
 	},
-
 	-- auto commenter
-	{ "scrooloose/nerdcommenter", lazy = true, event = 'VeryLazy' },
+	{
+		"scrooloose/nerdcommenter",
+		lazy = true,
+		event = 'VeryLazy',
+		config = function()
+			-- ctrl+/ for commenting
+			if has("macunix") then
+				map("n", "÷", "<Plug>NERDCommenterToggle",
+					{ noremap = false, desc = "Option + / to toggle line comment" })
+				map("v", "÷", "<Plug>NERDCommenterToggle<CR>gv",
+					{ noremap = false, desc = "Option + / to toggle line comment" })
+				map("i", "÷", "<C-c><Plug>NERDCommenterToggle",
+					{ noremap = false, desc = "Option + / to toggle line comment" })
+			elseif has("win64") then
+				map("n", "<C-_>", "<Plug>NERDCommenterToggle", { noremap = false, desc = "Toggle line comment" })
+				map("v", "<C-_>", "<Plug>NERDCommenterToggle<CR>gv", { noremap = false, desc = "Toggle line comment" })
+				map("i", "<C-_>", "<C-c><Plug>NERDCommenterToggle", { noremap = false, desc = "Toggle line comment" })
+			end
+		end
+	},
 
 	-- UI to interact with git
 	{
 		"tpope/vim-fugitive",
 		lazy = true,
-		cmd = "Git"
+		cmd = "Git",
+		config = function()
+			map("n", "<SPACE>gl", ":Git log --decorate --oneline --graph --all<CR>",
+				{ desc = "<Space>gl to show git log" })
+			map("n", "<SPACE>gs", ":Git<CR>", { desc = "<Space>gs to show git status" })
+			vim.cmd("cnorea Gf Git fetch")
+			vim.cmd("cnorea Gpull Git pull")
+			vim.cmd("cnorea Gsw Git switch")
+			vim.cmd("cnorea Gb Git branch")
+		end
+
 	},
 
 	-- Better netrw
@@ -60,6 +109,8 @@ return {
 					}
 				}
 			)
+
+			map("n", "<C-\\>", "<cmd>Oil<cr>", { desc = "<Ctrl-\\ for openning the current directory in Oil" })
 		end,
 	},
 

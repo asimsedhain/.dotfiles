@@ -1,7 +1,15 @@
 -- sets
 --
 
+-- global variables
+local g = vim.g
 local global_options = vim.opt
+
+
+-- variables to modify netrw
+g.netrw_banner = 0
+g.netrw_liststyle = 3
+g.netrw_winsize = 25
 
 global_options.backup = false
 global_options.writebackup = false
