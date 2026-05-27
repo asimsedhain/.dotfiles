@@ -76,6 +76,7 @@ local lsp_servers = {
 	tailwindcss = {},
 	clangd = {},
 	null_ls = {},
+	---@type lspconfig.settings.lua_ls
 	lua_ls = {
 		settings = {
 			Lua = {
@@ -87,6 +88,7 @@ local lsp_servers = {
 					-- Get the language server to recognize the `vim` global
 					globals = { "vim" },
 				},
+				preloadFileSize = 10000,
 				workspace = {
 					-- Make the server aware of Neovim runtime files
 					checkThirdParty = false,
@@ -109,7 +111,10 @@ local lsp_servers = {
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
-local on_attach = function(client, bufnr)
+local on_attach = function(ev)
+	local client = assert(vim.lsp.get_client_by_id(ev.data.client_id))
+	local bufnr = ev.buf
+
 	-- Mappings.
 	-- See `:help vim.lsp.*` for documentation on any of the below functions
 	map("n", "<Space>d", vim.diagnostic.open_float,
@@ -138,7 +143,7 @@ local on_attach = function(client, bufnr)
 	end, {})
 
 	-- highlighting on cursorhold
-	if client.server_capabilities.document_highlight then
+	if client:supports_method("textDocument/documentHighlight") then
 		api.nvim_create_autocmd("CursorHold", {
 			buffer = bufnr,
 			desc = "Highlight symbol under cursor",
@@ -193,25 +198,16 @@ return {
 		event = "VeryLazy",
 		dependencies = { "saghen/blink.cmp" },
 		config = function()
-			--local capabilities =
-			local capabilities = require('blink.cmp').get_lsp_capabilities(vim.lsp.protocol.make_client_capabilities())
+			--local capabilities = require('blink.cmp').get_lsp_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 			for lsp_server, cfg in pairs(lsp_servers) do
-				if next(cfg) ~= nil then
-					local default_on_attach = (vim.lsp.config[lsp_server] or {}).on_attach
-					vim.lsp.config(lsp_server, {
-						on_attach = {
-							on_attach,
-							default_on_attach
-						},
-						capabilities = capabilities,
-						settings = cfg
-							.settings,
-						cmd = cfg.cmd
-					})
+				if next(cfg) ~= nil or lsp_server == 'null_ls' then
+					vim.lsp.config(lsp_server, cfg)
 				end
 				vim.lsp.enable(lsp_server)
 			end
+			vim.api.nvim_create_autocmd('LspAttach',
+				{ group = vim.api.nvim_create_augroup('all.lsp', {}), callback = on_attach })
 		end,
 	},
 	{
@@ -220,6 +216,8 @@ return {
 		version = '1.*',
 		lazy = true,
 		event = "InsertEnter",
+		---@module 'blink.cmp'
+		---@type blink.cmp.Config
 		opts = {
 			keymap = {
 				preset = 'none',
