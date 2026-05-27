@@ -53,15 +53,13 @@ local lsp_servers = {
 	rust_analyzer = {
 		settings = {
 			["rust-analyzer"] = {
-				-- enable clippy on save
-				check = {
-					command = "clippy",
-				},
-				diagnostics = {
-					enable = true,
-				},
+				-- enable clippy on save check = {
+				command = "clippy",
 			},
-		}
+			diagnostics = {
+				enable = true,
+			},
+		},
 	},
 	svelte = {},
 	cssls = {
@@ -81,20 +79,7 @@ local lsp_servers = {
 		settings = {
 			Lua = {
 				runtime = {
-					-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
 					version = "LuaJIT",
-				},
-				diagnostics = {
-					-- Get the language server to recognize the `vim` global
-					globals = { "vim" },
-				},
-				preloadFileSize = 10000,
-				workspace = {
-					-- Make the server aware of Neovim runtime files
-					checkThirdParty = false,
-					library = {
-						vim.env.VIMRUNTIME,
-					}
 				},
 				-- Do not send telemetry data containing a randomized but unique identifier
 				telemetry = {
@@ -111,6 +96,7 @@ local lsp_servers = {
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
+--- @param ev vim.api.keyset.create_autocmd.callback_args
 local on_attach = function(ev)
 	local client = assert(vim.lsp.get_client_by_id(ev.data.client_id))
 	local bufnr = ev.buf
@@ -127,15 +113,15 @@ local on_attach = function(ev)
 	map("n", "<F2>", vim.lsp.buf.rename, { buffer = bufnr, desc = "<F2> LSP rename" })
 	map("n", "K", vim.lsp.buf.hover, { buffer = bufnr, desc = "K: show buf hover information" })
 
-	if client:supports_method("textDocument/formatting", { bufnr = bufnr }) then
+	if client:supports_method("textDocument/formatting", bufnr) then
 		api.nvim_buf_create_user_command(bufnr, "Format", format_function_fac(client.name), {})
 		api.nvim_buf_create_user_command(bufnr, "F", format_function_fac(client.name), {})
 	end
 
 
 
-	api.nvim_buf_create_user_command(bufnr, "Enext", vim.diagnostic.goto_next, {})
-	api.nvim_buf_create_user_command(bufnr, "Eprev", vim.diagnostic.goto_prev, {})
+	api.nvim_buf_create_user_command(bufnr, "Enext", vim.diagnostic.jump, {count=1})
+	api.nvim_buf_create_user_command(bufnr, "Eprev", vim.diagnostic.jump, {count=-1})
 
 	-- code actions shortcut
 	api.nvim_buf_create_user_command(bufnr, "Caction", function()
@@ -239,10 +225,28 @@ return {
 			},
 
 			sources = {
-				default = { 'lsp', 'path', 'buffer' },
+				default = { 'lazydev', 'lsp', 'path', 'buffer' },
+				providers = {
+					lazydev = {
+						name = "LazyDev",
+						module = "lazydev.integrations.blink",
+						-- make lazydev completions top priority (see `:h blink.cmp`)
+						score_offset = 100,
+					},
+				}
 			},
 			fuzzy = { implementation = "prefer_rust_with_warning" }
 		},
 		opts_extend = { "sources.default" }
+	},
+	{
+		"folke/lazydev.nvim",
+		ft = "lua",
+		opts = {
+			library = {
+				{ path = "${3rd}/luv/library", words = { "vim%.uv" } },
+				"nvim-lspconfig"
+			},
+		},
 	}
 }
