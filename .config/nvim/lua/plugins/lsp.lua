@@ -26,7 +26,7 @@ vim.diagnostic.config({
 		source = false,
 	},
 	float = {
-		source = "always",
+		source = true
 	},
 })
 
