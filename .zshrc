@@ -67,7 +67,10 @@ if [[ "$(uname)" == "Darwin" ]]; then
 fi
 
 # rust bin path
-export PATH="$PATH:~/.cargo/bin"
+export PATH="$PATH:$HOME/.cargo/bin"
+
+# go bin path
+export PATH="$PATH:$HOME/go/bin"
 
 # Running simple cpp scripts
 runCpp(){
@@ -147,3 +150,12 @@ export OPENAI_API_KEY=$(security find-generic-password -s openai -w)
 
 . "$HOME/.local/bin/env"
 source $HOME/.venv/bin/activate
+
+cac() {
+    if [[ -f .venv/bin/activate ]]; then
+        source .venv/bin/activate
+    else
+        echo "No virtual environment found at .venv/"
+        return 1
+    fi
+}
